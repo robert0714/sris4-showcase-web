@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd" bean-discovery-mode="annotated">
+
+
+	<!-- FOR CDI http://balusc.blogspot.nl/2013/10/how-to-install-cdi-in-tomcat.html Create a (empty) /WEB-INF/beans.xml file (no, not in /META-INF! 
+		that's only for JARs such as OmniFaces). /META-INF -->
+		
+	<interceptors>
+		<class>com.iisigroup.udeweb.jsf.springbridge.SpringBridgeInterceptor</class>
+		<class>tw.gov.moi.aeweb.RisWebControllerInterceptor</class>
+	</interceptors>
+
+
+</beans>

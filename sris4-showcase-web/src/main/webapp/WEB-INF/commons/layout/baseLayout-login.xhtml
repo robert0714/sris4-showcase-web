@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <meta content="no-cache" http-equiv="Cache-Control" />
+    <meta content="no-cache" http-equiv="Pragma" />
+    <meta content="0" http-equiv="Expires" />
+    <meta content="" http-equiv="keywords" />
+    <link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="Bookmark" type="image/x-icon" href="/favicon.ico" />
+    <title><ui:insert name="page-title">戶役資訊服務網 - 集中化平台開發</ui:insert></title>
+    <ui:insert name="global-recources">
+        <ui:include src="/WEB-INF/commons/layout/include/global-recources.xhtml" />
+    </ui:insert>
+</h:head>
+
+<h:body id="sirs4containerBody">
+
+    <ui:insert name="header">
+        <div class="header" style="text-align: right; padding-right: 1em;">戶役資訊服務網 - 集中化平台開發</div>
+    </ui:insert>
+
+    <div class="container">
+        <div class="row" style="padding-bottom: 16px;">
+            <div class="col-md-12">
+                <ui:insert name="pre-body">
+                    <div style="text-align: center;">
+                        <h3>使用者登入</h3>
+                    </div>
+                </ui:insert>
+                <ui:insert name="body">
+                    <div class="row">
+                        <div class="col-md-4" />
+                        <div class="col-md-4" style="height: 30em; text-align: center;">
+                            <form method="POST" action="#{application.contextPath}/performLogin">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <div class="form-group" style="text-align: left;">
+                                    <label for="name" class="control-label">帳號：</label> <input class="form-control" name="username" maxlength="10"
+                                        size="10" />
+                                </div>
+                                <div class="form-group" style="text-align: left;">
+                                    <label for="name" class="control-label">密碼：</label> <input type="password" class="form-control" name="password"
+                                        maxlength="10" size="10" />
+                                </div>
+                                <div class="form-group btn-group" style="text-align: center;">
+                                    <input type="submit" value="登入" class="btn btn-primary" /> <input type="reset" value="重設" class="btn btn-default" />
+                                </div>
+                                <div>#{risSystemConfigTool.version}</div>
+                            </form>
+                        </div>
+                        <div class="col-md-4" />
+                    </div>
+                </ui:insert>
+                <ui:insert name="post-body" />
+            </div>
+        </div>
+    </div>
+    <ui:insert name="footer">
+        <div class="row">
+            <hr style="width: 80%; color: #638eb5; height: 2px; background-color: #638eb5; margin-bottom: 0.1em;" />
+            <div class="col-sm-7" style="text-align: right;">
+                <div>網站最佳瀏覽畫面使用Firefox 17.0.1 以上版本瀏覽器，解析度 1440 X 900</div>
+                <div>Copyright:Dept of Household Registration, M. O. I.</div>
+            </div>
+            <div class="col-sm-3">
+                <div>地址：(10055)台北市徐州路5號</div>
+                <div>電話：(02)2356-5000(總機)</div>
+            </div>
+        </div>
+    </ui:insert>
+    <ui:insert name="blockui">
+        <ui:include src="/WEB-INF/commons/layout/blockui.xhtml" />
+    </ui:insert>
+    <h:form id="growls">
+        <p:growl for="growlInfo" life="30000" severity="info" sticky="false" showDetail="true" escape="false" autoUpdate="false" />
+        <p:growl for="growlWarn" life="30000" severity="warn" sticky="false" showDetail="true" escape="false" autoUpdate="false" />
+        <p:growl for="growlError" life="30000" severity="error,fatal" sticky="false" showDetail="true" escape="false" autoUpdate="false" />
+    </h:form>
+</h:body>
+</html>
+

@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+
+	<div>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">SRIS4</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav">
+						<li class=""><a href="#2" onclick="$('#formLogout').submit();">登出</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<form method="POST" id="formLogout" action="#{application.contextPath}/performLogout">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</form>
+	</div>
+
+
+</ui:composition>
+

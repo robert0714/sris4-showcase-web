@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd 
+    ">
+
+    <http use-expressions="true" auto-config="true">
+        <intercept-url pattern="/faces/javax.faces.resource/**" access="permitAll" />
+        <intercept-url pattern="/faces/pages/login.xhtml" access="permitAll" />
+        <intercept-url pattern="/faces/**" access="permitAll" />
+
+        <!-- 注意：login-page 指向的功能頁要設為 permitAll -->
+        <form-login login-page="/faces/pages/login.xhtml" login-processing-url="/performLogin" authentication-failure-url="/faces/pages/login.xhtml?error=true"
+            default-target-url="/faces/pages/index.xhtml" username-parameter="username" password-parameter="password"
+            authentication-success-handler-ref="authenticationSuccessHandler" always-use-default-target="false" />
+
+        <logout logout-url="/performLogout" logout-success-url="/" delete-cookies="true" invalidate-session="true" />
+    </http>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder hash="md5">
+                <salt-source system-wide="${auth.password.salt}" />
+            </password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+
+    <!-- 專案共用的 USER 資料提供. -->
+    <beans:bean id="userDetailsService" class="tw.gov.moi.aeweb.security.impl.UserDetailsServiceImpl">
+<!--         <beans:property name="salt" value="${auth.password.salt}" /> -->
+    </beans:bean>
+
+    
+    <!-- =================== -->
+    <!-- ===     UDE     === -->
+    <!-- =================== -->
+
+    <beans:bean id="authenticationSuccessHandler" class="com.iisigroup.udeweb.security.impl.AuthenticationSuccessHandlerImpl">
+        <beans:constructor-arg index="0" ref="permissionManager" />
+        <beans:constructor-arg index="1" ref="authorityProvider" />
+        <beans:property name="currentMenuKey" value="currentMenu" />
+        <beans:property name="currentUserKey" value="currentUser" />
+    </beans:bean>
+
+    <!-- UDE : 權限驗證 Filter : 需有  OperationResolver / PermissionManager 若無，則純用於處理 CurrentUserUtils 資訊 -->
+    <beans:bean id="authorityFilter" class="tw.gov.moi.aeweb.security.RisAuthorityFilter">
+        <beans:constructor-arg index="0" ref="authorityProvider" />
+        <!-- <beans:property name="operationResolver" ref="operationResolver" /> -->
+        <beans:property name="permissionManager" ref="permissionManager" />
+    </beans:bean>
+
+    <!-- UDE : URI 對應至 功能 Resolver 使用預設實作 (採用子功能名稱為 URL一部分的風格) -->
+    <beans:bean id="authorityProvider" class="com.iisigroup.udeweb.security.impl.WebAuthorityProviderSpringImpl" />
+    
+    <!-- UDE : 權限驗證元件(in iisi-udeweb-spring-util) ： 需 PermissionProvider/menuProvider -->
+    <beans:bean id="permissionManager" class="com.iisigroup.udeweb.security.impl.PermissionManagerImpl">
+        <beans:property name="permissionProvider" ref="permissionProvider" />
+        <beans:property name="menuProvider" ref="menuProvider" />
+        <beans:property name="springSecurityOnly" value="false" />
+    </beans:bean>
+    
+    <!-- UDE要求 : URI 對應至 功能 Resolver 使用預設實作 (採用子功能名稱為 URL一部分的風格) 
+    <beans:bean id="operationResolver" class="tw.gov.moi.aeweb.security.impl.OperationResolverImpl" />
+    -->
+    <!-- UDE要求 : 角色權限對應實作 -->
+    <beans:bean id="permissionProvider" class="tw.gov.moi.aeweb.security.impl.PermissionProviderImpl">
+        <beans:property name="configPath" value="${config.path}/tw.gov.moi.aeweb.security.menus.properties" />
+    </beans:bean>
+    
+    <!-- UDE要求 : 角色權限對應實作 -->
+    <beans:bean id="menuProvider" class="tw.gov.moi.aeweb.security.impl.MenuProviderImpl">
+        <beans:property name="configPath" value="${config.path}/tw.gov.moi.aeweb.security.menus.properties" />
+    </beans:bean>
+
+</beans:beans>
+
+
+
+
+

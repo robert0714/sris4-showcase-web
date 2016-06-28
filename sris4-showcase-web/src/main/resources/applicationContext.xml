@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="
+	   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+	   ">
+
+    <context:annotation-config />
+
+    <bean id="udeBaseConfig" class="com.iisigroup.ude.system.UdePropertyPlaceholderConfigurer">
+        <property name="systemProperties" value="file:${BASEDIR}/GLOBAL/projects/showcase-config.properties" />
+        <property name="hostProperties" value="file:${global.config.path}/host.properties" />
+    </bean>
+
+
+    <context:component-scan base-package="tw.gov.moi.rl.*">
+        <context:exclude-filter type="regex" expression="tw.gov.moi.rl.web.*" />
+        <context:exclude-filter type="regex" expression="tw.gov.moi.rl.web.*.controller.*" />
+    </context:component-scan>
+
+
+	<!-- 資料庫元件 
+    <import resource="classpath:rll-db-connection.xml" />
+	-->
+
+
+	<!-- AE -->
+    <import resource="classpath:AE/sris4-ae-basic.xml" />
+    <import resource="classpath:AE/sris4-ae-aop.xml" />
+    <import resource="classpath:AE/sris4-ae-core-checker.xml" />
+	
+	<!-- 權限管理 -->
+    <import resource="classpath:spring-security-free-loginform.xml" />
+
+</beans>

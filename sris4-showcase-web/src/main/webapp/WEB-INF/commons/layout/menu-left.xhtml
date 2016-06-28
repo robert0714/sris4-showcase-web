@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ris="http://java.sun.com/jsf/composite/ris">
+
+
+
+
+    <div style="background-color: white; height: 44em; border-radius: 5px !important;">
+            <!-- 	<ris:menu /> -->
+        <ui:include src="/WEB-INF/commons/layout/menu-left-userinfo.xhtml" />
+        <c:choose>
+            <c:when test="${currentMenu!=null}">
+                <c:set var="menuNow" value="${currentMenu}" />
+            </c:when>
+            <c:when test="${global_guestMenu!=null}">
+                <c:set var="menuNow" value="${global_guestMenu}" />
+                ANONYMOUS： <br/>
+            </c:when>
+        </c:choose>
+
+
+        <c:set var="LT" value="&lt;" />
+        <c:set var="GT" value="&gt;" />
+
+        <c:set var="LI_S" value="&lt;li&gt;" />
+        <c:set var="LI_DS" value="&lt;li class='dropdown' &gt;" />
+        <c:set var="LI_E" value="&lt;/li&gt;" />
+        <c:set var="UL_S" value="&lt;ul&gt;" />
+        <c:set var="UL_DS" value="&lt;ul class='dropdown-menu'&gt;" />
+        <c:set var="UL_E" value="&lt;/ul&gt;" />
+
+        <c:if test="${menuNow!=null}">
+
+            <ul class="nav nav-pills nav-stacked">
+                <c:forEach var="menu" items="#{menuNow.all}">
+                    <c:if test="${menu.level>0 and menu.level lt 2}">
+                        <c:if test="${level2_start == true}">
+                            <h:outputText value='#{UL_E}' escape="false" />
+                            <h:outputText value='#{LI_E}' escape="false" />
+                            <c:set var="level2_start" value="${false}" />
+                        </c:if>
+                    </c:if>
+                    <c:if test="${menu.level==1}">
+                        <c:if test="${level1_start == true}">
+                            <h:outputText value='#{UL_E}' escape="false" />
+                            <h:outputText value='#{LI_E}' escape="false" />
+                            <c:set var="level1_start" value="${false}" />
+                        </c:if>
+                    </c:if>
+                    
+                    <c:if test="${fn:length(menu.children) > 0}">
+                        <c:if test="${menu.level==1}">
+                            <c:set var="level1_start" value="${true}" />
+                            <h:outputText value='#{LI_DS}' escape="false" />
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">${menu.text}<sub>(${menu.level})</sub><span class="caret"></span></a>
+                            <h:outputText value='#{UL_DS}' escape="false" />
+                        </c:if>
+                        <c:if test="${menu.level==2}">
+                            <c:set var="level2_start" value="${true}" />
+                            <h:outputText value='#{LI_DS}' escape="false" />
+                            <a class="dropdown-sub-toggle" data-toggle="dropdown" href="#">${menu.text}<sub>(${menu.level})</sub><span class="caret"></span></a>
+                            <h:outputText value='#{UL_DS}' escape="false" />
+                        </c:if>
+
+
+                    </c:if>
+                    <c:if test="${fn:length(menu.children) == 0}">
+                        <li><a href='#{request.contextPath}#{menu.url}'>#{menu.text}<sub>(${menu.level})</sub></a></li>
+                    </c:if>
+                        
+                    <c:if test="${menu.level==1}">    
+                    </c:if>
+                    <c:if test="${menu.level > 1}">
+                    </c:if>
+                    
+                </c:forEach>
+
+                <c:if test="${level2_start == true}">
+                    <h:outputText value='#{UL_E}' escape="false" />
+                    <h:outputText value='#{LI_E}' escape="false" />
+                    <c:set var="level2_start" value="${false}" />
+                </c:if>
+                <c:if test="${level1_start == true}">
+                    <h:outputText value='#{UL_E}' escape="false" />
+                    <h:outputText value='#{LI_E}' escape="false" />
+                    <c:set var="level1_start" value="${false}" />
+                </c:if>
+                
+                
+            </ul>
+        </c:if>
+
+
+
+
+
+    </div>
+</ui:composition>

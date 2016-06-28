@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>sris4-showcase-web</artifactId><packaging>war</packaging>
+
+	<!-- 
+	replace (<dependency|groupId|artifactId|scope)>\R\s+<
+	     as $1>< 
+ 	-->
+	<parent>
+		<groupId>tw.gov</groupId><artifactId>sris4-parent</artifactId><version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+
+		<!-- 元件 -->
+		<dependency><groupId>tw.gov</groupId><artifactId>sris4-ae-core</artifactId></dependency>
+        <dependency><groupId>tw.gov</groupId><artifactId>sris4-ae-testkit</artifactId></dependency>
+        <dependency><groupId>tw.gov</groupId><artifactId>sris4-db-domain-main</artifactId></dependency>
+		<dependency><groupId>com.iisigroup</groupId><artifactId>iisi-ude-api</artifactId></dependency>
+		 
+		<!-- DATABASE -->
+		<!-- FOR HIBERNATE & CDI -->
+		<!-- http://stackoverflow.com/questions/25797866/hibernate-makes-weld-not-initializing-in-java-se -->
+        <dependency><groupId>commons-dbcp</groupId><artifactId>commons-dbcp</artifactId></dependency>
+		<dependency><groupId>org.jboss</groupId><artifactId>jandex</artifactId><version>1.2.2.Final</version></dependency>
+		 
+		<!-- WEB -->
+		<dependency><groupId>tw.gov</groupId><artifactId>sris4-aeweb</artifactId></dependency>
+<dependency>
+    <groupId>org.apache.tomcat</groupId>
+    <artifactId>tomcat-catalina</artifactId>
+    <version>8.0.35</version>
+    <scope>provided</scope>
+</dependency>
+
+		<!-- WEB provided -->
+		<dependency><groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId><scope>provided</scope></dependency>
+		<dependency><groupId>javax.servlet.jsp</groupId><artifactId>jsp-api</artifactId><scope>provided</scope></dependency>
+		<dependency><groupId>javax.enterprise</groupId><artifactId>cdi-api</artifactId><scope>provided</scope></dependency>
+
+		<!-- TEST -->
+		<dependency><groupId>junit</groupId><artifactId>junit</artifactId><scope>test</scope></dependency>
+		<dependency><groupId>org.springframework</groupId><artifactId>spring-test</artifactId><scope>test</scope></dependency>
+		<dependency><groupId>org.mockito</groupId><artifactId>mockito-core</artifactId><scope>test</scope></dependency>
+
+		<!-- LOG -->
+		<dependency><groupId>ch.qos.logback</groupId><artifactId>logback-core</artifactId></dependency>
+		<dependency><groupId>ch.qos.logback</groupId><artifactId>logback-classic</artifactId></dependency>
+		<dependency><groupId>ch.qos.logback</groupId><artifactId>logback-access</artifactId></dependency>
+		
+		
+	</dependencies>
+	
+	
+	<build>
+		<finalName>showcase</finalName>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>ude</id>
+			<url>http://192.168.57.21/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>iisi</id>
+			<url>http://192.168.10.8/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>primeface</id>
+			<url>http://repository.primefaces.org/</url>
+		</repository>
+	</repositories>
+</project>

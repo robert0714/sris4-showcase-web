@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:ris="http://java.sun.com/jsf/composite/ris"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div>
+        <div style="font-size: 9px;  color: #AAAAAA;padding-left:0.4em;">#{risSystemConfigTool.system.system} - #{risSystemConfigTool.serverName}</div>
+        <div class="userinfo">
+	       <div>#{risSystemConfigTool.environment}</div>
+           <img src="#{resource['images:sris4_icon_user.png']}" style="vertical-align: bottom; margin-right: 2px;" />
+           <h:outputText value="#{currentUser.username}" />
+           <button id="logoutButton" 
+                type="button" style="float: rigth;"
+                class="logoutinfo"
+                onclick="$('#formLogout').submit();" />
+           <form method="POST" id="formLogout" action="#{application.contextPath}/performLogout">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+           </form>
+        </div>
+           <div class="timeinfo">
+	           <div>本次登入時間： 105/05/10 13:44:50</div>
+               <div>上次登入時間： 105/05/10 12:39:28</div>
+           </div>
+           <div class="searchinfo">
+	           <ris:form>
+	               <p:inputText style="width:158px;" />
+	               <p:commandButton icon="ui-icon-search" alt="搜尋" />
+               </ris:form>
+           </div>
+	</div>
+
+</ui:composition>
+

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.apache.myfaces.EXPRESSION_FACTORY</param-name>
+		<param-value>org.apache.el.ExpressionFactoryImpl</param-value>
+	</context-param>
+
+	<!-- <context-param> <param-name>primefaces.THEME</param-name> <param-value>bootstrap</param-value> 
+		</context-param> -->
+
+	<!-- 1. 啟動 ContextLoaderListener，初始化 The Root WebApplicationContext * contextConfigLocation 
+		: 指定 Root WebApplicationContext 所使用 XML 設定檔 * 用於定義後台的 Service / DAO ... * 
+		此項初始化完成後，會放在 servletContext.getAttribute("org.springframework.web.context.ROOT") -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+
+
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+    <listener>
+        <listener-class>tw.gov.moi.aeweb.showcase.common.auth.AnonymousMenuListener</listener-class>
+    </listener>
+        
+	<!-- <listener> <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class> 
+		</listener> <listener> <listener-class>org.apache.webbeans.servlet.WebBeansConfigurationListener</listener-class> 
+		</listener> <listener> <listener-class>org.cdisource.springintegration.servletsupport.ApplicationContextFinderServletContextListener</listener-class> 
+		</listener> <listener> <listener-class>org.apache.myfaces.extensions.cdi.weld.startup.WeldAwareConfigurationListener</listener-class> 
+		</listener> -->
+
+
+	<!-- 2. 啟動 JSF contextConfigLocation : 指定 WebApplicationContext 所使用 XML 
+		設定檔 -->
+
+    <servlet>
+        <servlet-name>HiddenResourcesServlet</servlet-name>
+        <servlet-class>tw.gov.moi.aeweb.jsf.dispatcher.HiddenResourcesDispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>FacesServlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HiddenResourcesServlet</servlet-name>
+        <url-pattern>/error/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FacesServlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FacesServlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+
+	<!-- Filters C. Spring Security : 需有 authentication-manager in spring-security-*.xml -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/faces/*</url-pattern>
+		<url-pattern>/performLogout</url-pattern>
+		<url-pattern>/performLogin</url-pattern>
+	</filter-mapping>
+    
+    <filter>
+      <filter-name>forceUTF8CharSet</filter-name>
+      <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+      <init-param>
+        <param-name>encoding</param-name>
+        <param-value>utf-8</param-value>
+      </init-param>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>forceUTF8CharSet</filter-name>
+      <url-pattern>*</url-pattern>
+    </filter-mapping>    
+
+	<!-- Filters D. 自訂的 AuthorityFilter: 需有 authorityFilter Bean in spring-security-*.xml -->
+	<filter>
+		<filter-name>authorityFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>authorityFilter</filter-name>
+		<url-pattern>/faces/*</url-pattern>
+	</filter-mapping>
+
+
+
+	<!-- 4. Log 相關 -->
+
+	<listener>
+		<listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
+	</listener>
+
+
+
+	<!-- 5. ErrorPage -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/http-status.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/http-status.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error/http-status.xhtml</location>
+    </error-page>
+
+
+	<!-- Z. 其它 -->
+	<welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>
