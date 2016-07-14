@@ -31,10 +31,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-    <listener>
-        <listener-class>tw.gov.moi.aeweb.showcase.common.auth.AnonymousMenuListener</listener-class>
-    </listener>
-        
+	<listener>
+		<listener-class>tw.gov.moi.aeweb.showcase.common.auth.AnonymousMenuListener</listener-class>
+	</listener>
+
 	<!-- <listener> <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class> 
 		</listener> <listener> <listener-class>org.apache.webbeans.servlet.WebBeansConfigurationListener</listener-class> 
 		</listener> <listener> <listener-class>org.cdisource.springintegration.servletsupport.ApplicationContextFinderServletContextListener</listener-class> 
@@ -45,29 +45,43 @@
 	<!-- 2. 啟動 JSF contextConfigLocation : 指定 WebApplicationContext 所使用 XML 
 		設定檔 -->
 
-    <servlet>
-        <servlet-name>HiddenResourcesServlet</servlet-name>
-        <servlet-class>tw.gov.moi.aeweb.jsf.dispatcher.HiddenResourcesDispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet>
-        <servlet-name>FacesServlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HiddenResourcesServlet</servlet-name>
-        <url-pattern>/error/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FacesServlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FacesServlet</servlet-name>
-        <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
-
+	<servlet>
+		<servlet-name>HiddenResourcesServlet</servlet-name>
+		<servlet-class>tw.gov.moi.aeweb.jsf.dispatcher.HiddenResourcesDispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>FacesServlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HiddenResourcesServlet</servlet-name>
+		<url-pattern>/error/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FacesServlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FacesServlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	
+	
+<!-- 	h2  -->
+	<servlet>
+		<servlet-name>H2Console</servlet-name>
+		<servlet-class>org.h2.server.web.WebServlet</servlet-class>
+		<!-- <init-param> <param-name>webAllowOthers</param-name> <param-value></param-value> 
+			</init-param> <init-param> <param-name>trace</param-name> <param-value></param-value> 
+			</init-param> -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>H2Console</servlet-name>
+		<url-pattern>/console/*</url-pattern>
+	</servlet-mapping>
 
 	<!-- Filters C. Spring Security : 需有 authentication-manager in spring-security-*.xml -->
 	<filter>
@@ -80,20 +94,20 @@
 		<url-pattern>/performLogout</url-pattern>
 		<url-pattern>/performLogin</url-pattern>
 	</filter-mapping>
-    
-    <filter>
-      <filter-name>forceUTF8CharSet</filter-name>
-      <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
-      <init-param>
-        <param-name>encoding</param-name>
-        <param-value>utf-8</param-value>
-      </init-param>
-    </filter>
 
-    <filter-mapping>
-      <filter-name>forceUTF8CharSet</filter-name>
-      <url-pattern>*</url-pattern>
-    </filter-mapping>    
+	<filter>
+		<filter-name>forceUTF8CharSet</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>forceUTF8CharSet</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
 
 	<!-- Filters D. 自訂的 AuthorityFilter: 需有 authorityFilter Bean in spring-security-*.xml -->
 	<filter>
@@ -116,23 +130,23 @@
 
 
 	<!-- 5. ErrorPage -->
-    <error-page>
-        <error-code>404</error-code>
-        <location>/error/http-status.xhtml</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/error/http-status.xhtml</location>
-    </error-page>
-    <error-page>
-        <exception-type>java.lang.Exception</exception-type>
-        <location>/error/http-status.xhtml</location>
-    </error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/http-status.xhtml</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/http-status.xhtml</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error/http-status.xhtml</location>
+	</error-page>
 
 
 	<!-- Z. 其它 -->
 	<welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 

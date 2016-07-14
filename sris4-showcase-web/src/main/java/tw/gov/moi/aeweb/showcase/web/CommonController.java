@@ -1,6 +1,9 @@
 package tw.gov.moi.aeweb.showcase.web;
 
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -17,6 +20,7 @@ import com.iisigroup.udeweb.jsf.springbridge.SpringBridge;
 import tw.gov.moi.ae.AECDMesg;
 import tw.gov.moi.aeweb.BaseRisController;
 import tw.gov.moi.aeweb.exception.RisWebException;
+import tw.gov.moi.aeweb.showcase.common.H2DataSourceTools;
 import tw.gov.moi.aeweb.showcase.common.TestingDTO;
 
 @Named("commonController")
@@ -103,11 +107,24 @@ public class CommonController extends BaseRisController {
         LOGGER.debug("SAMPLE DTO : {}", this.sample);
         throw RisWebException.create(AECDMesg.AE9999E);
     }
+    
+    
 
     //== [Method] Block Stop
     //================================================
     //== [Inner Class] Block Start
     //== [Inner Class] Block Stop
     //================================================
-
+    public void doTest(){
+    	System.out.println("TEST~~~~~~~~~~~~~~~~~~~~~~~~");
+    	Connection conn= H2DataSourceTools.getH2Connection();
+    	try {
+			DatabaseMetaData dbMeta= conn.getMetaData();
+			System.out.println("this db name is "+ dbMeta.getDatabaseProductName());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }
