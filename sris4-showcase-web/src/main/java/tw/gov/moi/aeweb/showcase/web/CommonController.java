@@ -115,16 +115,32 @@ public class CommonController extends BaseRisController {
     //== [Inner Class] Block Start
     //== [Inner Class] Block Stop
     //================================================
-    public void doTest(){
+    private String dbName="no";
+    
+ 
+
+	public void doTest(){
     	System.out.println("TEST~~~~~~~~~~~~~~~~~~~~~~~~");
     	Connection conn= H2DataSourceTools.getH2Connection();
     	try {
 			DatabaseMetaData dbMeta= conn.getMetaData();
 			System.out.println("this db name is "+ dbMeta.getDatabaseProductName());
+			dbName=dbMeta.getDatabaseProductName();
+			conn.close();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
     }
+	
+	
+	   public String getDbName() {
+			return dbName;
+		}
+
+		public void setDbName(String dbName) {
+			this.dbName = dbName;
+		}
 }
