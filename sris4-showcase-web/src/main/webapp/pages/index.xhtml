@@ -6,12 +6,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/commons/layout/baseLayout.xhtml">
 
-
 	<ui:define name="body">
        <div style="height:42.3em;">
        #{application.contextPath} <br />
-        wild li! ~~~~
+        wild li! ~~~~ssss
+     <h:form style="display:inline" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8" >
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+      	<p:commandButton value="刪除申請" action="#{commonController.doTest()}" />
+     </h:form>
+        
        </div>
+	
 	</ui:define>
 
 </ui:composition>
