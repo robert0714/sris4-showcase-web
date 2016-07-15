@@ -13,19 +13,19 @@ public class H2DataSourceTools {
 	private static boolean firstTime = true;
 
 	public static Connection getH2Connection() {
-		String url = "jdbc:h2:~/sirs4TestDB;INIT=runscript from \'classpath:scripts/jamari.sql\';AUTO_SERVER=TRUE";
+		String url = "jdbc:h2:mem:sirs4TestDB;INIT=runscript from \'classpath:scripts/jamari.sql\'";
 		String user = "sa";
 		String password = "sa";
 		String args[] = { "-tcpAllowOthers" };
 		Connection conn =null;
 		if (firstTime) {
-			try {
-				server = Server.createTcpServer(args);
-				server.start();
-			} catch (SQLException e) {
-				System.out.println("can't start H2 DB ");
-				e.printStackTrace();
-			}
+//			try {
+//				server = Server.createTcpServer(args);
+//				server.start();
+//			} catch (SQLException e) {
+//				System.out.println("can't start H2 DB ");
+//				e.printStackTrace();
+//			}
 			cp = JdbcConnectionPool.create(url, user, password);
 			firstTime=false;
 		}
