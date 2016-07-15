@@ -13,7 +13,7 @@ public class H2DataSourceTools {
 	private static boolean firstTime = true;
 
 	public static Connection getH2Connection() {
-		String url = "jdbc:h2:mem:sirs4TestDB;INIT=runscript from \'classpath:scripts/jamari.sql\'";
+		String url = "jdbc:h2:mem:sris4TestDB;INIT=runscript from \'classpath:scripts/sris4.sql\'";
 		String user = "sa";
 		String password = "sa";
 		String args[] = { "-tcpAllowOthers" };
