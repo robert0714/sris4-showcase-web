@@ -106,6 +106,7 @@ public class CommonController extends BaseRisController {
     public String doQueryPageWithException() {
         LOGGER.debug("SAMPLE DTO : {}", this.sample);
         throw RisWebException.create(AECDMesg.AE9999E);
+        
     }
 
     //== [Method] Block Stop
