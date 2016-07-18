@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ris="http://java.sun.com/jsf/composite/ris"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<p:fieldset legend="變更統一編號申請單" rendered="#{commonController.hide004}">
+		<table>
+			<tr>
+				<th>單號：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.orderNumber}" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<th>姓名：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.personName}" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<th>日期：</th>
+				<td><p:outputLabel value="105-07-20" maxlength="10"/>
+				</td>
+			</tr>
+			<tr>
+				<th>原證號：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.personID}"/></td>
+			</tr>
+			<tr>
+				<th>新證號：</th>
+				<td><p:outputLabel value="#{commonController.newIDMark}" /></td>
+			</tr>
+		</table>
+		<p align="center">
+			<p:commandButton value="申請" action="#{commonController.saveXLDF()}" rendered="#{commonController.hide005}" update="@form"/>
+			<p:commandButton value="刪除" action="#{commonController.doDelete()}" rendered="#{not commonController.hide005}" update="@form"/>
+		</p>
+	</p:fieldset>
+</ui:composition>

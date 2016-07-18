@@ -68,6 +68,7 @@ public class TestingDTO implements Serializable {
 
     Object             varObj     ;
     Object             varObj2    ;
+    
     //@formatter:on
 
     //== [instance variables] Block Stop 
@@ -394,5 +395,4 @@ public class TestingDTO implements Serializable {
 
     //== [Method] Block Stop 
     //================================================
-
 }

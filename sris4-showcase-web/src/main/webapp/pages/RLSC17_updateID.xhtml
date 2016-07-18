@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ris="http://java.sun.com/jsf/composite/ris"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	
+	<p:fieldset legend="變更統一編號" rendered="#{commonController.hide001}">
+		<table>
+			<tr>
+				<h:panelGroup rendered="#{commonController.hide003}">
+				<th>單號：</th>
+				<td>
+					<p:outputLabel value="#{commonController.rl0171cVO.orderNumber}" maxlength="10" />
+				</td>
+				</h:panelGroup>
+			</tr>
+			<tr>
+				<th>姓名：</th>
+				<td>
+					<p:outputLabel value="#{commonController.rl0171cVO.personName}" maxlength="10" />
+				</td>
+				<th>新變更統一編號：</th>
+				<td>
+					<h:panelGroup rendered="#{commonController.hide002}">
+						<p:inputText id="newIDMark" value="#{commonController.newIDMark}" maxlength="10" readonly="true"/>
+						<p:commandButton id="btnGetNewID" value="產生統號" action="#{commonController.getNewId()}" update="@form" />
+					</h:panelGroup>		
+					<h:panelGroup rendered="#{commonController.showcol}">
+						<p:outputLabel value="#{commonController.newIDMark}" maxlength="10" />
+					</h:panelGroup>								
+				</td>
+			</tr>
+			<tr>
+				<th>出生身份：</th>
+				<td>
+					<p:outputLabel value="#{commonController.rl0171cVO.bornIdentity}" maxlength="10" />
+				</td>
+				<th>出生日期：</th>
+				<td>
+				<p:outputLabel value="#{commonController.rl0171cVO.birthYear} - #{commonController.rl0171cVO.birthMonth} - #{commonController.rl0171cVO.birthDay}"
+					maxlength="10" /> 
+				</td>
+			</tr>
+			<tr>
+				<th>出生地點：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.placeOfBirth}" maxlength="10" />
+				</td>
+			</tr>
+			<tr>
+				<th>出生別：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.birthOrder}" maxlength="10" />
+				</td>
+			</tr>
+			<tr>
+				<th>地址：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.address}" maxlength="10" />
+				</td>
+			</tr>
+			<tr>
+				<th>配偶：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.spouseName}" maxlength="10" />
+				</td>
+			</tr>
+			<tr>
+				<th>父：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.fatherName}" maxlength="10" />
+				</td>
+			</tr>
+			<tr>
+				<th>母：</th>
+				<td><p:outputLabel value="#{commonController.rl0171cVO.motherName}" maxlength="10" />
+				</td>
+			</tr>
+		</table>
+		<h:panelGroup rendered="#{commonController.hide002}">
+			<h:selectOneMenu value="#{commonController.changeCause}" style="width:150px">
+				<p:ajax listener="#{commonController.causeOnChange}" update="mixText" />
+				<f:selectItem itemLabel="===請選擇更變原因===" itemValue="empty" />
+				<f:selectItems value="#{commonController.changeCauses}" />
+			</h:selectOneMenu>
+		</h:panelGroup>
+		<p:fieldset id="mixText" legend="組合計事" style="margin-bottom:20px" >
+			<h:outputLabel value="#{commonController.mixText}" ></h:outputLabel>
+		</p:fieldset>
+								
+		<p align="center">
+			<h:panelGroup rendered="#{commonController.hide002}">
+				<p:commandButton value="製單" action="#{commonController.verifyAppData()}" update="@form"/>
+				<p:commandButton value="取消" action="#{commonController.doCancel()}" update="@form" />
+			</h:panelGroup>
+			<h:panelGroup  rendered="#{commonController.hide003}">
+				<p:commandButton value="送出" action="#{commonController.submit()}" update="@form"/>
+				<p:commandButton value="取消" action="#{commonController.back()}" update="@form"/>
+			</h:panelGroup>
+		</p>
+	</p:fieldset>
+</ui:composition>

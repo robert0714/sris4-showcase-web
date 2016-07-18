@@ -50,12 +50,7 @@
 		<dependency><groupId>ch.qos.logback</groupId><artifactId>logback-classic</artifactId></dependency>
 		<dependency><groupId>ch.qos.logback</groupId><artifactId>logback-access</artifactId></dependency>
 		
-		<!-- 		h2DB -->
-		<dependency>
-    	<groupId>com.h2database</groupId>
-    	<artifactId>h2</artifactId>
-    	<version>1.4.187</version>
-		</dependency>
+		
 	</dependencies>
 	
 	

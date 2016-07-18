@@ -1,17 +1,18 @@
 package tw.gov.moi.aeweb.showcase.web;
 
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.WindowScoped;
-import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.StreamedContent;
 
 import com.iisigroup.udeweb.jsf.UDEWebController;
@@ -20,7 +21,10 @@ import com.iisigroup.udeweb.jsf.springbridge.SpringBridge;
 import tw.gov.moi.ae.AECDMesg;
 import tw.gov.moi.aeweb.BaseRisController;
 import tw.gov.moi.aeweb.exception.RisWebException;
-import tw.gov.moi.aeweb.showcase.common.H2DataSourceTools;
+
+import tw.gov.moi.aeweb.showcase.common.IDMaker;
+import tw.gov.moi.aeweb.showcase.common.Rl0171cVO;
+
 import tw.gov.moi.aeweb.showcase.common.TestingDTO;
 
 @Named("commonController")
@@ -46,6 +50,9 @@ public class CommonController extends BaseRisController {
 
     private TestingDTO sample;
 
+    // TODO 練習用
+    private Rl0171cVO rl0171cVO;
+    
     private StreamedContent file;
 
     //== [instance variables] Block Stop
@@ -58,8 +65,14 @@ public class CommonController extends BaseRisController {
     @PostConstruct
     public void init() {
         this.sample = new TestingDTO();
-        InputStream stream = this.getClass().getResourceAsStream("yourfile.pdf");
-        this.file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_file.pdf");
+        
+        this.rl0171cVO = new Rl0171cVO();
+//        InputStream stream = this.getClass().getResourceAsStream("yourfile.pdf");
+//        this.file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_file.pdf");
+       
+        changeCauses=new HashMap<String, String>();
+        changeCauses.put("身分證號重複", "idIsBad");
+        changeCauses.put("身分證號碼不佳", "idIsBad2");
     }
 
     //== [Constructors] Block Stop
@@ -84,6 +97,7 @@ public class CommonController extends BaseRisController {
     //####################################################################
 
     public void doQuery() {
+    	System.err.println("this test method~~~~");
         LOGGER.debug("SAMPLE DTO : {}", this.sample);
         this.risFacesTool.addMessage(AECDMesg.AE0001S);
     }
@@ -108,39 +122,291 @@ public class CommonController extends BaseRisController {
         throw RisWebException.create(AECDMesg.AE9999E);
     }
     
-    
+    public void actionTest() {
+        LOGGER.debug("test : {}", this.sample);
+        this.risFacesTool.addMessage(AECDMesg.AE0001S);
+    }
 
     //== [Method] Block Stop
     //================================================
     //== [Inner Class] Block Start
     //== [Inner Class] Block Stop
     //================================================
-    private String dbName="no";
     
- 
+    
+    // TODO
+    private Map<String, String> changeCauses;
+    private String changeCause;
+    private String mixText;
+    
+	public Map<String, String> getChangeCauses() {
+		return changeCauses;
+	}
+    
+    public void setChangeCauses(Map<String, String> changeCauses) {
+		this.changeCauses = changeCauses;
+	}
 
-	public void doTest(){
-    	System.out.println("TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-    	Connection conn= H2DataSourceTools.getH2Connection();
-    	try {
-			DatabaseMetaData dbMeta= conn.getMetaData();
-			System.out.println("this db name is "+ dbMeta.getDatabaseProductName());
-			dbName=dbMeta.getDatabaseProductName();
-			conn.close();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public String getChangeCause() {
+		return changeCause;
+	}
+
+	public void setChangeCause(String changeCause) {
+		this.changeCause = changeCause;
+	}
+	
+	public String getMixText() {
+		return mixText;
+	}
+
+	public void setMixText(String mixText) {
+		this.mixText = mixText;
+	}
+    
+    // 控制前端顯示區塊 TODO
+    private boolean hide001;
+    private boolean hide002;
+    private boolean hide003;
+    private boolean hide004;
+    private boolean hide005;
+    
+    private boolean showcol;
+    
+    private String inputPersonID;
+    private String newIDMark;
+    
+    
+	public Rl0171cVO getRl0171cVO() {
+		return rl0171cVO;
+	}
+
+	public String getInputPersonID() {
+		return inputPersonID;
+	}
+
+	public void setInputPersonID(String inputPersonID) {
+		this.inputPersonID = inputPersonID;
+	}
+
+	public void setNewIDMark(String newIDMark) {
+		this.newIDMark = newIDMark;
+	}
+	
+	public String getNewIDMark() {
+		return newIDMark;
+	}
+
+	public boolean isHide001() {
+		return hide001;
+	}
+
+	public void setHide001(boolean hide001) {
+		this.hide001 = hide001;
+	}
+
+	public boolean isHide002() {
+		return hide002;
+	}
+
+	public void setHide002(boolean hide002) {
+		this.hide002 = hide002;
+	}
+
+	public boolean isHide003() {
+		return hide003;
+	}
+
+	public void setHide003(boolean hide003) {
+		this.hide003 = hide003;
+	}
+
+	public boolean isHide004() {
+		return hide004;
+	}
+
+	public void setHide004(boolean hide004) {
+		this.hide004 = hide004;
+	}
+	
+	public boolean isHide005() {
+		return hide005;
+	}
+
+	public void setHide005(boolean hide005) {
+		this.hide005 = hide005;
+	}
+	
+	public boolean isShowcol() {
+		return showcol;
+	}
+
+	public void setShowcol(boolean showcol) {
+		this.showcol = showcol;
+	}
+
+	// 取得新統一編號
+    public void getNewId()
+    {
+    	newIDMark = IDMaker.getNewIdMark(rl0171cVO.getPlaceOfBirth(), "MAN");
+    }
+    
+    // 載入統一編號更正登記畫面
+ 	public void loadPage()
+ 	{
+ 		// qry身分證統一編號是否正確 & 是否有申請單
+ 		if (inputPersonID.length() == 0 || 
+			inputPersonID.length() < 10)
+ 		{
+ 			if (hide001)
+ 	 		{
+ 				rl0171cVO = new Rl0171cVO();
+ 	 			hide001 = false;
+ 	 			hide002 = false;
+ 	 		}
+ 			
+ 			showErrorMessage("請輸入國民身分證統一編號(長度為10碼)");
+ 		}
+ 		else if (!rl0171cVO.isOrder())
+ 		{
+	 		createSampleData();
+	
+	 		hide001 = true;
+	 		hide002 = true;
+	 		hide003 = false;
+	 		hide004 = false;
+	 		hide005 = false;
+	 		showcol = false;
+ 		}
+ 	}	
+ 	
+	
+    // 取消執行統一編號更正登記
+	public String doCancel()
+	{
+		hide001 = false;
+		hide002 = false;
+		
+		newIDMark = "";
+		
+		rl0171cVO = new Rl0171cVO();
+		
+		return "";
+	}
+	
+	// 刪除統一編號更正登記資料
+	public void doDelete()
+	{
+		rl0171cVO = new Rl0171cVO();
+		newIDMark = "";
+		hide001 = false;
+ 		hide002 = false;
+ 		hide003 = false;
+ 		hide004 = false;
+ 		hide005 = false;
+ 		showcol = false;
+	}
+	
+	// 執行資料驗證並自動組合記事
+	public void verifyAppData()
+	{
+		if (newIDMark == null ||
+			newIDMark.length() == 0 || 
+			newIDMark.length() < 10)
+ 		{
+			showErrorMessage("新變更統一編號 不可為空值");
+ 		}
+		else if (changeCause.equals("empty"))
+		{
+			showErrorMessage("請選擇組合記事更變原因");
 		}
+ 		else
+ 		{
+ 			rl0171cVO.setOrderNumber("A160XXXXXXXX");
+//			String oldnote = sample.getNotebook();
+//			sample.setNotebook(oldnote + "變更統一編號測試組合記事資料");
+			
+			hide002 = false;
+			hide003 = true;
+			showcol = true;
+ 		}
+	}
+	
+	public void submit()
+	{
+		hide003 = false;
+		hide004 = true;
+		hide005 = true;
+		// todo
+	}
+	
+	public void back()
+	{
+		rl0171cVO.setOrderNumber("");
+//		String oldnote = sample.getNotebook();
+//		oldnote = oldnote.substring(0, oldnote.indexOf("變更統一編號測試組合記事資料"));
+		mixText = rl0171cVO.getNotebook();
+		// 原登記國民身分證統一編號為××××××××××係錯誤（誤錄、誤報、不符配賦邏輯、性別變更、性別錯誤、出生別錯誤）民國×××年××月××日更正（經×××戶政事務所逕為更正登記）。
+		
+		//sample.setNotebook(oldnote);
+		
+		hide002 = true;
+		hide003 = false;
+		showcol = false;
+	}
+	
+    public void causeOnChange(){
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	java.util.Date date=new java.util.Date();
     	
+    	if("idIsBad".equals(changeCause)){
+    		mixText = rl0171cVO.getNotebook() + rl0171cVO.getPersonName() + " 於  " + dateFormat.format(date) + " 因  身分證號重複  申請變更身分證號碼";
+    	}
+    	else if("idIsBad2".equals(changeCause)){
+    		mixText = rl0171cVO.getNotebook() + rl0171cVO.getPersonName() + " 於  " + dateFormat.format(date) + " 因  身分證號碼不佳  申請變更身分證號碼";
+    	}
+    	else if("empty".equals(changeCause)){
+    		mixText = rl0171cVO.getNotebook();
+    	}
     }
 	
+	// 儲存統一編號更正登記申請資料至XLDF Table
+	public void saveXLDF()
+	{
+		rl0171cVO.setOrder(true);
+		hide005 = false;
+	}
 	
-	   public String getDbName() {
-			return dbName;
-		}
-
-		public void setDbName(String dbName) {
-			this.dbName = dbName;
-		}
+	// 檢核是否已完成「資料驗證」
+	private boolean checkIsVerifyData()
+	{
+		
+		return true;
+	}
+	
+	private void createSampleData()
+	{
+		rl0171cVO.setPersonID(inputPersonID);
+		rl0171cVO.setPersonName("謝旻諺");
+		rl0171cVO.setBornIdentity("婚生");
+		rl0171cVO.setPlaceOfBirth("10007彰化縣");
+		rl0171cVO.setBirthOrder("長男");
+		rl0171cVO.setAddress("新北市板橋區中山路");
+		rl0171cVO.setSpouseName("無");
+		rl0171cVO.setFatherName("謝父");
+		rl0171cVO.setMotherName("謝母");
+		
+		rl0171cVO.setBirthYear("73");
+		rl0171cVO.setBirthMonth("01");
+		rl0171cVO.setBirthDay("25");
+		
+		rl0171cVO.setNotebook("謝旻諺 統一編號××××××××××民國×73年01月25日出生（經××× 戶政事務所核准逕為出生登記）。");
+		
+		mixText = rl0171cVO.getNotebook();
+	}
+	
+	private void showErrorMessage(String errorStr)
+	{
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "錯誤", errorStr);
+		RequestContext.getCurrentInstance().showMessageInDialog(message);
+	}
 }
