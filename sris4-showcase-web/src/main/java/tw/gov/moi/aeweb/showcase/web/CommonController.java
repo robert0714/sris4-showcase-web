@@ -129,6 +129,13 @@ public class CommonController extends BaseRisController {
     private boolean hide004;
     private boolean hide005;
     
+    private boolean isQuery;
+    private boolean isVerify;
+    private boolean isApply;
+    private boolean isDone;
+    
+    private String legend;
+    
     private boolean showcol;
     
     private String intputPersonID;
@@ -229,6 +236,13 @@ public class CommonController extends BaseRisController {
  		{
 	 		createSampleData();
 	
+	 		isQuery = true;
+	 		isVerify = false;
+	 		isApply = false;
+	 		
+	 		legend = "變更統一編號";
+	 		
+	 		
 	 		hide001 = true;
 	 		hide002 = true;
 	 		hide003 = false;
@@ -242,8 +256,12 @@ public class CommonController extends BaseRisController {
     // 取消執行統一編號更正登記
 	public String doCancel()
 	{
+		
+		
 		hide001 = false;
 		hide002 = false;
+		
+		
 		
 		newIDMark = "";
 		
@@ -263,6 +281,11 @@ public class CommonController extends BaseRisController {
  		hide004 = false;
  		hide005 = false;
  		showcol = false;
+ 		
+ 		isQuery = false;
+ 		isVerify = false;
+ 		isApply = false;
+ 		isDone = false;
 	}
 	
 	// 執行資料驗證並自動組合記事
@@ -276,10 +299,13 @@ public class CommonController extends BaseRisController {
  		}
  		else
  		{
-	
+ 			
 			sample.setOrderNumber("A160XXXXXXXX");
 			String oldnote = sample.getNotebook();
 			sample.setNotebook(oldnote + "變更統一編號測試組合記事資料");
+			
+			setIsVerify(true);
+			legend = "申請單號:A0000116";
 			
 			hide002 = false;
 			hide003 = true;
@@ -292,6 +318,9 @@ public class CommonController extends BaseRisController {
 		hide003 = false;
 		hide004 = true;
 		hide005 = true;
+		
+		isApply = true;
+		isDone = true;
 		// todo
 	}
 	
@@ -313,6 +342,7 @@ public class CommonController extends BaseRisController {
 	{
 		sample.setOrder(true);
 		hide005 = false;
+		isDone = false;
 	}
 	
 	// 檢核是否已完成「資料驗證」
@@ -325,20 +355,21 @@ public class CommonController extends BaseRisController {
 	private void createSampleData()
 	{
 		sample.setPersonID(intputPersonID);
-		sample.setPersonName("謝旻諺");
+		sample.setPersonName("袁明聖");
 		sample.setBornIdentity("婚生");
 		sample.setPlaceOfBirth("10007彰化縣");
-		sample.setBirthOrder("長男");
-		sample.setAddress("新北市板橋區中山路");
+		sample.setBirthOrder("次男");
+		sample.setAddress("桃園市中壢區慈惠一街");
 		sample.setSpouseName("無");
-		sample.setFatherName("謝父");
-		sample.setMotherName("謝母");
+		sample.setFatherName("袁父");
+		sample.setMotherName("袁母");
 		
-		sample.setBirthYear("73");
-		sample.setBirthMonth("01");
-		sample.setBirthDay("25");
+		sample.setBirthYear("78");
+		sample.setBirthMonth("10");
+		sample.setBirthDay("15");
 		
-		sample.setNotebook("謝旻諺 統一編號××××××××××民國×73年01月25日出生（經××× 戶政事務所核准逕為出生登記）。");
+		sample.setNotebook("袁明聖 統一編號××××××××××民國"+sample.getBirthYear()+"年"+sample.getBirthMonth()+"月"+sample.getBirthDay()
+							+"日出生（經××× 戶政事務所核准逕為出生登記）。");
 	}
 	
 	private void showErrorMessage(String errorStr)
@@ -346,4 +377,45 @@ public class CommonController extends BaseRisController {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "錯誤", errorStr);
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 	}
+
+	public boolean getIsQuery() {
+		return isQuery;
+	}
+
+	public void setIsQuery(boolean isQuery) {
+		this.isQuery = isQuery;
+	}
+
+	public boolean getIsVerify() {
+		return isVerify;
+	}
+
+	public void setIsVerify(boolean isVerify) {
+		this.isVerify = isVerify;
+	}
+
+	public String getLegend() {
+		return legend;
+	}
+
+	public void setLegend(String legend) {
+		this.legend = legend;
+	}
+
+	public boolean getIsApply() {
+		return isApply;
+	}
+
+	public void setIsApply(boolean isApply) {
+		this.isApply = isApply;
+	}
+
+	public boolean getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(boolean isDone) {
+		this.isDone = isDone;
+	}
+
 }

@@ -8,15 +8,162 @@
 
 
 	<ui:define name="body">
-       <div style="height:42.3em;">
-       #{application.contextPath} <br />
+		<div style="height: 42.3em;">
+			<h:form acceptcharset="utf-8"
+						enctype="application/x-www-form-urlencoded; charset=UTF-8">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+			<p:panel>
 
-        HELLO!!
-        Jamari Yuan
+				<p:fieldset legend="統一編號變更">
 
-        wild li! ~~~~
+						<p:panelGrid>
+							<f:facet name="header">
+								<p:row>
+									<p:column>當事人統一編號：</p:column>
+								</p:row>
+							</f:facet>
+							<p:row>
+								<p:column>
+									<p:inputText value="#{commonController.intputPersonID}" maxlength="10" />
+									<p:commandButton value="查詢" action="#{commonController.loadPage()}" update="@form" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+				</p:fieldset>
+				<br />
+				<p:fieldset legend="#{commonController.legend}" rendered="#{commonController.isQuery}">
 
-       </div>
+
+					<p:panelGrid>
+						<p:row>
+							<p:column style="width:150px">
+								<h:outputText value="姓名：" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{commonController.sample.personName}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							
+							<p:column>
+								<h:outputText value="出生身份：" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{commonController.sample.bornIdentity}" />
+							</p:column>
+							<p:column style="width:150px">
+								<h:outputText value="新變更統一編號：" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{commonController.newIDMark}" size="12" readonly="true" rendered="#{not commonController.isVerify}" />
+								<h:outputText value="#{commonController.newIDMark}" size="12" rendered="#{commonController.isVerify}" />
+								<p:commandButton rendered="#{not commonController.isVerify}" value="產生統號" action="#{commonController.getNewId()}"  update="@form" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText value="出生地點" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{commonController.sample.placeOfBirth}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="出生日期：" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{commonController.sample.birthYear} - #{commonController.sample.birthMonth} - #{commonController.sample.birthDay}" size="12"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText value="出生別：" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{commonController.sample.birthOrder}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="組合記事：" />
+							</p:column>
+							<p:column rowspan="5">
+								<p:inputTextarea rows="5" cols="50"
+									value="#{commonController.sample.notebook}" readonly="true" width="300" rendered="#{not commonController.isVerify}"  />
+								<p:outputLabel value="#{commonController.sample.notebook}" width="300" rendered="#{commonController.isVerify}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText value="地址：" />
+							</p:column>
+							<p:column style="width:300px">
+								<h:outputText value="#{commonController.sample.address}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText value="配偶：" />
+							</p:column>
+							<p:column colspan="3">
+								<h:outputText value="#{commonController.sample.spouseName}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>	
+								<h:outputText value="父：" />
+							</p:column>
+							<p:column colspan="3" width="300">
+								<h:outputText value="#{commonController.sample.fatherName}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText value="母：" />
+							</p:column>
+							<p:column colspan="3">
+								<h:outputText value="#{commonController.sample.motherName}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+					<p:commandButton value="製單" rendered="#{not commonController.isVerify}" action="#{commonController.verifyAppData()}" update="@form" />
+					<p:commandButton value="取消" rendered="#{commonController.isVerify}" action="#{commonController.loadPage()}" update="@form"/>
+					<p:commandButton value="送出" rendered="#{commonController.isVerify}" action="#{commonController.submit()}" update="@form"/>
+				</p:fieldset>
+				
+				<p:fieldset legend="變更統一編號申請單" rendered="#{commonController.isApply}">
+		<p:panelGrid>
+			<p:row>
+				<th>單號：</th>
+				<td><p:outputLabel value="#{commonController.sample.orderNumber}" maxlength="10" /></td>
+			</p:row>
+			<tr>
+				<th>姓名：</th>
+				<td><p:outputLabel value="#{commonController.sample.personName}" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<th>日期：</th>
+				<td><p:outputLabel value="105-07-20" maxlength="10"/>
+				</td>
+			</tr>
+			<tr>
+				<th>原證號：</th>
+				<td><p:outputLabel value="#{commonController.sample.personID}"/></td>
+			</tr>
+			<tr>
+				<th>新證號：</th>
+				<td><p:outputLabel value="#{commonController.newIDMark}" /></td>
+			</tr>
+		</p:panelGrid>
+		<p align="center">
+			<p:commandButton value="申請" action="#{commonController.saveXLDF()}" rendered="#{commonController.isDone}" update="@form"/>
+			<p:commandButton value="刪除" action="#{commonController.doDelete()}" rendered="#{not commonController.isDone}" update="@form"/>
+		</p>
+	</p:fieldset>
+			</p:panel>
+		</h:form>
+
+
+		</div>
 	</ui:define>
 
 </ui:composition>
