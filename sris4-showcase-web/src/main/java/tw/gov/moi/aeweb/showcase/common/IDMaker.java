@@ -13,10 +13,11 @@ public class IDMaker
 		int checknum = 0; // 產生前9碼的同時計算產生驗證碼
 
 		// 產生第一個英文字母
-		int t = (r.nextInt(26) + 65);
+		int t = (checkHead.indexOf(HeadCode) + 66);
+		s += (char) t;
 		
-		s += IDHeadMark.getIDHead(HeadCode.substring(0, 5)).toString();
-//		t = checkHead.indexOf((char) t) + 10;
+		t = checkHead.indexOf((char) t) + 10;
+		
 		checknum += t / 10;
 		checknum += t % 10 * 9;
 
@@ -24,15 +25,15 @@ public class IDMaker
 		
 		if (gender.equals("MAN"))
 		{
-			s += "1";
+			s += Integer.toString(t = 1);
 		}
 		else
 		{
-			s += "2";
+			s += Integer.toString(t = 2);
 		}
-//		s += Integer.toString(t = r.nextInt(2) + 1);
-//		
-//		checknum += t * 8;
+		
+		
+		checknum += t * 8;
 
 		// 產生後8碼
 		for (int i = 2; i < 9; i++) {
@@ -44,19 +45,25 @@ public class IDMaker
 		checknum = (10 - ((checknum) % 10)) % 10;
 		s += Integer.toString(checknum);
 		return s;
-		
 	}
 	
-	public static void main(String[] args) 
+	/**
+	 *  測試用
+	 */
+	/*public static void main(String[] args) 
 	{
 		Random r = new Random();
 		String s = "";
 		int checknum = 0; // 產生前9碼的同時計算產生驗證碼
 
 		// 產生第一個英文字母
-		int t = (r.nextInt(26) + 65);
+		
+		int t = (checkHead.indexOf("N") + 66);//(r.nextInt(26) + 65);
 		s += (char) t;
+		
 		t = checkHead.indexOf((char) t) + 10;
+		
+		
 		checknum += t / 10;
 		checknum += t % 10 * 9;
 
@@ -74,5 +81,5 @@ public class IDMaker
 		checknum = (10 - ((checknum) % 10)) % 10;
 		s += Integer.toString(checknum);
 		System.out.println(s);
-	}
+	}*/
 }
