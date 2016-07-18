@@ -3,7 +3,14 @@ package tw.gov.moi.aeweb.showcase.web;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -22,6 +29,7 @@ import tw.gov.moi.aeweb.BaseRisController;
 import tw.gov.moi.aeweb.exception.RisWebException;
 import tw.gov.moi.aeweb.showcase.common.H2DataSourceTools;
 import tw.gov.moi.aeweb.showcase.common.TestingDTO;
+import tw.gov.moi.aeweb.showcase.model.ClientVO;
 
 @Named("commonController")
 @WindowScoped
@@ -58,8 +66,25 @@ public class CommonController extends BaseRisController {
     @PostConstruct
     public void init() {
         this.sample = new TestingDTO();
-        InputStream stream = this.getClass().getResourceAsStream("yourfile.pdf");
-        this.file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_file.pdf");
+//        InputStream stream = this.getClass().getResourceAsStream("yourfile.pdf");
+//        this.file = new DefaultStreamedContent(stream, "application/pdf", "downloaded_file.pdf");
+        clientVOs=new ArrayList<>();
+        ClientVO clientVo =new ClientVO();
+        clientVo.setClientID("H123456789");
+        clientVo.setClientName("李威德");
+        clientVo.setClientBornIdentity("婚生");
+        clientVo.setClientBornLoc("桃園");
+        clientVo.setClientBornOrder("次男");
+        clientVo.setClientAddress("板橋火車站");
+        clientVo.setClientMate("母老虎");
+        clientVo.setClientFather("李爸爸");
+        clientVo.setClientMother("李媽媽");
+        clientVo.setClientBornDate(new Date(87, 3, 22));
+        clientVOs.add(clientVo);
+        
+        changeCauses=new HashMap<String, String>();
+        changeCauses.put("身分證號重複", "idIsBad");
+        changeCauses.put("身分證號碼不佳", "idIsBad2");
     }
 
     //== [Constructors] Block Stop
@@ -115,32 +140,110 @@ public class CommonController extends BaseRisController {
     //== [Inner Class] Block Start
     //== [Inner Class] Block Stop
     //================================================
-    private String dbName="no";
     
- 
-
-	public void doTest(){
-    	System.out.println("TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-    	Connection conn= H2DataSourceTools.getH2Connection();
-    	try {
-			DatabaseMetaData dbMeta= conn.getMetaData();
-			System.out.println("this db name is "+ dbMeta.getDatabaseProductName());
-			dbName=dbMeta.getDatabaseProductName();
-			conn.close();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    private List<ClientVO> clientVOs;
+    private boolean clientHasRender = true;
+    private String clientID;
+    private ClientVO renderedClientVO;
+    private Map<String, String> changeCauses;
+    private String changeCause;
+    private String mixText;
+    
+    
+    
+    public void renderClient(){
+    	
+    	System.out.println("input clientID = "+clientID);
+    	for(int i=0;i<clientVOs.size() ;i++){
+    		ClientVO clientVO=clientVOs.get(i);
+    		if(clientVO.getClientID().equalsIgnoreCase(this.clientID)){
+    			renderedClientVO=clientVO;
+    			break;
+    		}
+    	}
+    	if(renderedClientVO==null){
+    		System.out.println("no match clientID use defualt");
+    		renderedClientVO=clientVOs.get(0);
+    	}
+    	
+    	clientHasRender=false;
     	
     }
-	
-	
-	   public String getDbName() {
-			return dbName;
-		}
+    
+    public void causeOnChange(){
+    	System.out.println("cause has changed !");
+    	System.out.println("changeCause = "+changeCause);
+    	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	java.util.Date date=new java.util.Date();
+    	if("idIsBad".equals(changeCause)){
+    		mixText=renderedClientVO.getClientName()+" 於  "+dateFormat.format(date)+" 因  身分證號重複  申請變更身分證號碼";
+    	}
+    	else if("idIsBad2".equals(changeCause)){
+    		mixText=renderedClientVO.getClientName()+" 於  "+dateFormat.format(date)+" 因  身分證號碼不佳  申請變更身分證號碼";
+    	}
+    }
+    public void makeNewID(){
+    	System.out.println("make new ID ! ");
+    	renderedClientVO.setClientNewId("H987654321");
+    }
+    
+	public Map<String, String> getChangeCauses() {
+		return changeCauses;
+	}
 
-		public void setDbName(String dbName) {
-			this.dbName = dbName;
-		}
+	public void setChangeCauses(Map<String, String> changeCauses) {
+		this.changeCauses = changeCauses;
+	}
+
+	public String getChangeCause() {
+		return changeCause;
+	}
+
+	public void setChangeCause(String changeCause) {
+		this.changeCause = changeCause;
+	}
+
+	public List<ClientVO> getClientVOs() {
+		return clientVOs;
+	}
+
+	public void setClientVOs(List<ClientVO> clientVOs) {
+		this.clientVOs = clientVOs;
+	}
+
+	public boolean isClientHasRender() {
+		return clientHasRender;
+	}
+
+	public void setClientHasRender(boolean clientHasRender) {
+		this.clientHasRender = clientHasRender;
+	}
+
+	public String getClientID() {
+		return clientID;
+	}
+
+	public void setClientID(String clientID) {
+		this.clientID = clientID;
+	}
+
+	public ClientVO getRenderedClientVO() {
+		return renderedClientVO;
+	}
+
+	public void setRenderedClientVO(ClientVO renderedClientVO) {
+		this.renderedClientVO = renderedClientVO;
+	}
+
+	public String getMixText() {
+		return mixText;
+	}
+
+	public void setMixText(String mixText) {
+		this.mixText = mixText;
+	}
+	
+    
+    
+    
 }
