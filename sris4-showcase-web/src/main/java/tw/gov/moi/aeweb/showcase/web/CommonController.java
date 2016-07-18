@@ -142,12 +142,14 @@ public class CommonController extends BaseRisController {
     //================================================
     
     private List<ClientVO> clientVOs;
-    private boolean clientHasRender = true;
+    private boolean clientHasRender = false;
     private String clientID;
     private ClientVO renderedClientVO;
     private Map<String, String> changeCauses;
     private String changeCause;
-    private String mixText;
+    private String mixText="請選擇變更原因";
+    private boolean hasControlBtn=false;
+    private boolean hasMakeForm=false;
     
     
     
@@ -166,7 +168,7 @@ public class CommonController extends BaseRisController {
     		renderedClientVO=clientVOs.get(0);
     	}
     	
-    	clientHasRender=false;
+    	clientHasRender=true;
     	
     }
     
@@ -176,16 +178,41 @@ public class CommonController extends BaseRisController {
     	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     	java.util.Date date=new java.util.Date();
     	if("idIsBad".equals(changeCause)){
-    		mixText=renderedClientVO.getClientName()+" 於  "+dateFormat.format(date)+" 因  身分證號重複  申請變更身分證號碼";
+    		mixText=renderedClientVO.getClientName()+" 於  "+dateFormat.format(date)+" 因  身分證號重複  申請變更身分證號碼 \n"
+    				+ "原身分證號 : "+renderedClientVO.getClientID() +" 變更為: "+renderedClientVO.getClientNewId();
     	}
     	else if("idIsBad2".equals(changeCause)){
-    		mixText=renderedClientVO.getClientName()+" 於  "+dateFormat.format(date)+" 因  身分證號碼不佳  申請變更身分證號碼";
+    		mixText=renderedClientVO.getClientName()+" 於  "+dateFormat.format(date)+" 因  身分證號碼不佳  申請變更身分證號碼 \n "
+    				+ "原身分證號 : "+renderedClientVO.getClientID() +" 變更為: "+renderedClientVO.getClientNewId();
     	}
+    	
+    	hasControlBtn=true;
     }
     public void makeNewID(){
     	System.out.println("make new ID ! ");
     	renderedClientVO.setClientNewId("H987654321");
     }
+    
+    public void makeForm(){
+    	System.out.println("make form!!");
+    	hasMakeForm=true;
+    }
+    
+    public void doCancel(){
+    	System.out.println("cancel everthing! ");
+    	renderedClientVO.setClientNewId("");
+    	renderedClientVO=null;
+    	clientHasRender=false;
+    	hasControlBtn=false;
+    	hasMakeForm=false;
+    }
+    
+    public void doApply(){
+    	System.out.println("apply Form!");
+    }
+    
+    
+    
     
 	public Map<String, String> getChangeCauses() {
 		return changeCauses;
@@ -241,6 +268,22 @@ public class CommonController extends BaseRisController {
 
 	public void setMixText(String mixText) {
 		this.mixText = mixText;
+	}
+
+	public boolean isHasControlBtn() {
+		return hasControlBtn;
+	}
+
+	public void setHasControlBtn(boolean hasControlBtn) {
+		this.hasControlBtn = hasControlBtn;
+	}
+
+	public boolean isHasMakeForm() {
+		return hasMakeForm;
+	}
+
+	public void setHasMakeForm(boolean hasMakeForm) {
+		this.hasMakeForm = hasMakeForm;
 	}
 	
     
