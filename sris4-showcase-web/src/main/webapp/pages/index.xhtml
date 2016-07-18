@@ -4,21 +4,116 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:ris="http://java.sun.com/jsf/composite/ris"
 	template="/WEB-INF/commons/layout/baseLayout.xhtml">
 
 
 	<ui:define name="body">
-       <div style="height:42.3em;">
-       #{application.contextPath} <br />
 
-        HELLO!!
-        Jamari Yuan
+		<p:breadCrumb>
+			<p:menuitem value="Categories" url="#" />
+			<p:menuitem value="戶籍查詢" url="#" />
+			<p:menuitem value="登記" url="#" />
+			<p:menuitem value="文件核發" url="#" />
+		</p:breadCrumb>
+		
+		<h:form>
+			<!-- <p:panel > -->
+				
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
 
-        wild li! ~~~~
+				<div style="height: 50em;">
+					<br />
+
+					<p:fieldset legend="當事人清單">
+						
+						<p:panelGrid id="grid" columns="3" cellpadding="5">
+					   <h:outputLabel for="id" value="國民身分證統一編號：" />
+					   
+						<p:inputText id="id" value="#{rc.id}" required="true" validatorMessage="身份證格式錯誤" label="身份證">
+							<f:validateRegex pattern="^[a-zA-Z][0-9]{9}$" />
+						</p:inputText>		
+						
+						<p:column>
+							<p:messages id="messages" showDetail="false" autoUpdate="true"  />				
+						<br/><br/>
+						</p:column>
+						
+						<p:row>
+							<p:commandButton value="查詢" action="#{rc.loadPage}" ajax="false" validateClient="true"/>
+						</p:row>	
+						
+						</p:panelGrid>
+						
+						
+						
+                    	
+					</p:fieldset>
+
+					<br />
+					<div style="#{rc.displayValue}">
+
+						<p:fieldset legend="統一編號更正登記">
+
+						<p:panelGrid columns="2">
+							<h:outputLabel value="姓名 :" />   #{rc.peopleVO.name}<br/>
+							<h:outputLabel value="出生日期 :"/>#{rc.peopleVO.birthday}<br/>
+							<h:outputLabel value="出生地 :"/>  #{rc.peopleVO.birthplace}<br/>
+							<h:outputLabel value="位址 :"/>    #{rc.peopleVO.address}<br/>
+							<h:outputLabel value="配偶 :"/>    #{rc.peopleVO.spouse}<br/>
+							<h:outputLabel value="父親 :"/>    #{rc.peopleVO.father}<br/>
+							<h:outputLabel value="母親 :"/>    #{rc.peopleVO.mother}<br/>
+					    
+					    
+							<h:outputLabel value="更正原因 :"/>
+								<h:selectOneMenu value="#{rc.reason}" style="width:125px;" id="reason">
+									<f:selectItem itemLabel="Select One"    itemValue=""/>
+									<f:selectItem itemLabel="誤錄"          itemValue="誤錄"/>
+									<f:selectItem itemLabel="誤報"          itemValue="誤報"/>
+									<f:selectItem itemLabel="不符配賦邏輯"  itemValue="不符配賦邏輯"/>
+									<f:selectItem itemLabel="性別變更"      itemValue="性別變更"/>
+									<f:selectItem itemLabel="性別錯誤"      itemValue="性別錯誤"/>
+									<f:selectItem itemLabel="出生別錯誤"    itemValue="出生別錯誤"/>
+								</h:selectOneMenu>
+								
+							
+						</p:panelGrid>
+						
+						<p:panelGrid columns="3">
+							<h:outputLabel value="更正統一編號 :"></h:outputLabel>	
+							<p:commandButton value="更正" action="#{rc.calculateNewId}" update="newId"/>
+							<h:outputText value="#{rc.newId}" id="newId"/><br/>
+						
+						</p:panelGrid>
+						
+						
+						<p:fieldset legend="記事" style="#{rc.displayMemo}" id="memo">
+							因 #{rc.reason} 原配賦國民身分證統一編號 #{rc.peopleVO.id}<br/>
+							經 板橋 戶政事務所逕為更正為
+							#{rc.newId}
+							民國×××年××月××日申登。			
+						</p:fieldset>
+						<br/>
+						
+						<div style="text-align:center">
+							<p:commandButton value="資料驗證" action="#{rc.verifyAppData}" update="memo"/>&#160;&#160;
+							<p:commandButton value="取消" action="#{rc.doCancel}" update="newId memo reason"><p:ajax resetValues="true" /></p:commandButton>&#160;&#160;
+							<p:commandButton value="製單" />
+						</div>
+
+						</p:fieldset>
+
+					</div>
+
+				</div>
+			<!-- </p:panel> -->
+		</h:form>
 
 
-        test
-       </div>
+
+
+
 	</ui:define>
 
 </ui:composition>
