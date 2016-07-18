@@ -2,6 +2,7 @@ package tw.gov.moi.aeweb.showcase.common;
 
 import java.io.Serializable;
 
+
 public class Rl0171cVO implements Serializable 
 {
     /**
@@ -45,6 +46,9 @@ public class Rl0171cVO implements Serializable
     
     // 是否建單
     private boolean isOrder;
+    
+    // 新變更組合記事
+    private String mixNotebook;
     
 
 	public String getPersonID() {

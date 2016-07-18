@@ -28,14 +28,13 @@
 						<tr>
 							<th width="180">國民身分證統一編號：</th>
 							<td>
-								<p:inputText id="personID" value="#{commonController.intputPersonID}" maxlength="10" />	
+								<p:inputText id="personID" value="#{commonController.inputPersonID}" maxlength="10" />	
 								<p:commandButton value="查詢" action="#{commonController.loadPage()}" update="@form" />
-								 
-								
 							</td>
 						</tr>
 					</table>
 				</p:fieldset>
+				
 				<ui:include src="RLSC17_updateID.xhtml" />
 				<ui:include src="RLSC17_updateIDOrder.xhtml" />
 			</h:form>

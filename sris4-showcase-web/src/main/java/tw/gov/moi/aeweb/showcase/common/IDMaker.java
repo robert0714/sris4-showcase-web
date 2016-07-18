@@ -13,9 +13,8 @@ public class IDMaker
 		int checknum = 0; // 產生前9碼的同時計算產生驗證碼
 
 		// 產生第一個英文字母
-		int t = (checkHead.indexOf(HeadCode) + 66);
+		int t = (checkHead.indexOf(IDHeadMark.getIDHead(HeadCode.substring(0,5))) + 66);
 		s += (char) t;
-		
 		t = checkHead.indexOf((char) t) + 10;
 		
 		checknum += t / 10;
