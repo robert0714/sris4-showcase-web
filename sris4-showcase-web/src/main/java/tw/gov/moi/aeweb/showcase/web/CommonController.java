@@ -299,6 +299,7 @@ public class CommonController extends BaseRisController {
 		sample.setOrderNumber("");
 		String oldnote = sample.getNotebook();
 		oldnote = oldnote.substring(0, oldnote.indexOf("變更統一編號測試組合記事資料"));
+		// 原登記國民身分證統一編號為××××××××××係錯誤（誤錄、誤報、不符配賦邏輯、性別變更、性別錯誤、出生別錯誤）民國×××年××月××日更正（經×××戶政事務所逕為更正登記）。
 		
 		sample.setNotebook(oldnote);
 		
