@@ -30,7 +30,7 @@ public class Rl0171cController {
 	private String reason;
 	private PeopleInfo peopleInfo;
 	private PeopleVO peopleVO;
-	private Boolean isDisplayTable = false;
+	private boolean isDisplayTable = false;
 	private Boolean isDisplayMemo = false;
 	private Boolean dataOK = false;
 	
@@ -86,6 +86,16 @@ public class Rl0171cController {
 		this.peopleVO = peopleVO;
 	}
 
+	
+	public boolean isDisplayTable() {
+		return isDisplayTable;
+	}
+
+
+	public void setDisplayTable(boolean isDisplayTable) {
+		this.isDisplayTable = isDisplayTable;
+	}
+
 
 	public String getDisplayValue() {
 		
@@ -97,7 +107,7 @@ public class Rl0171cController {
 			
 	}
 	
-public String getDisplayMemo() {
+	public String getDisplayMemo() {
 		
 		if(isDisplayMemo){
 			return ("display:block");
@@ -113,13 +123,14 @@ public String getDisplayMemo() {
 		peopleVO = null; isDisplayTable = false;
 		peopleVO = peopleInfo.people_map.get(id);
 		
-		if( peopleVO != null ){
+		if( peopleVO != null || !id.isEmpty()){
 			isDisplayTable = true;
 		}else{
 			isDisplayTable = false;
 		}
 		
 		System.out.println("loadPage()~~~~~~~~"+isDisplayTable);
+		
 		
 	}
 	
@@ -135,7 +146,7 @@ public String getDisplayMemo() {
 	public String doCancel(){
 		
 			this.newId = "";
-			this.reason ="";
+			this.reason = "";
 			isDisplayMemo = false;
 		
 		return null;
@@ -145,7 +156,7 @@ public String getDisplayMemo() {
 	public void verifyAppData(){
 		
 		System.out.println("verifyAppData()~~~~~~~~");
-		dataOK=true;
+		dataOK = true;
 		
 		if( dataOK ){
 			isDisplayMemo = true;
