@@ -26,6 +26,11 @@
         <dependency><groupId>commons-dbcp</groupId><artifactId>commons-dbcp</artifactId></dependency>
 		<dependency><groupId>org.jboss</groupId><artifactId>jandex</artifactId><version>1.2.2.Final</version></dependency>
 		 
+		  <dependency><groupId>tw.gov</groupId><artifactId>sris-db-domain</artifactId><version>2.5.0-SRIS-SNAPSHOT</version></dependency>
+		 <dependency><groupId>tw.gov</groupId><artifactId>sris-ae-api</artifactId><version>2.5.0-SRIS-SNAPSHOT</version></dependency>
+		 <dependency><groupId>tw.gov</groupId><artifactId>sris-db-api</artifactId><version>2.5.0-SRIS-SNAPSHOT</version></dependency>
+		 <dependency><groupId>tw.gov</groupId><artifactId>sris-rs-api</artifactId><version>2.5.0-SRIS-SNAPSHOT</version></dependency>
+		 
 		<!-- WEB -->
 		<dependency><groupId>tw.gov</groupId><artifactId>sris4-aeweb</artifactId></dependency>
 <dependency>
@@ -63,13 +68,13 @@
 			<id>ude</id>
 			<url>http://192.168.57.21/nexus/content/repositories/snapshots/</url>
 		</repository>
-<!-- 		<repository> -->
-<!-- 			<id>iisi</id> -->
-<!-- 			<url>http://192.168.10.8/nexus/content/repositories/snapshots/</url> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>primeface</id> -->
-<!-- 			<url>http://repository.primefaces.org/</url> -->
-<!-- 		</repository> -->
+		<repository>
+			<id>iisi</id>
+			<url>http://192.168.10.8/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>primeface</id>
+			<url>http://repository.primefaces.org/</url>
+		</repository>
 	</repositories>
 </project>
