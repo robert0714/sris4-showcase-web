@@ -24,17 +24,16 @@
 
 				<p:fieldset legend="當事人清單">
 					
-					<table>
-						<tr>
-							<th width="180">國民身分證統一編號：</th>
-							<td>
+					<p:panelGrid style="margin-top:20px; width:100%;">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="國民身分證統一編號：" style="width: 200px; text-align: right"/>
 								<p:inputText id="personID" value="#{commonController.inputPersonID}" maxlength="10" />	
 								<p:commandButton value="查詢" action="#{commonController.loadPage()}" update="@form" />
-							</td>
-						</tr>
-					</table>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</p:fieldset>
-				
 				<ui:include src="RLSC17_updateID.xhtml" />
 				<ui:include src="RLSC17_updateIDOrder.xhtml" />
 			</h:form>
