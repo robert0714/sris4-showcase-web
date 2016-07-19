@@ -214,6 +214,8 @@ public class CommonController extends BaseRisController {
     public void getNewId()
     {
     	newIDMark = IDMaker.getNewIdMark(sample.getPlaceOfBirth(), "MAN");
+    	sample.setNotebook("袁明聖 統一編號"+newIDMark+"民國"+sample.getBirthYear()+"年"+sample.getBirthMonth()+"月"+sample.getBirthDay()
+		+"日出生（經××× 戶政事務所核准逕為出生登記）。");
     }
     
     // 載入統一編號更正登記畫面
@@ -241,7 +243,6 @@ public class CommonController extends BaseRisController {
 	 		isApply = false;
 	 		
 	 		legend = "變更統一編號";
-	 		
 	 		
 	 		hide001 = true;
 	 		hide002 = true;
@@ -368,8 +369,6 @@ public class CommonController extends BaseRisController {
 		sample.setBirthMonth("10");
 		sample.setBirthDay("15");
 		
-		sample.setNotebook("袁明聖 統一編號××××××××××民國"+sample.getBirthYear()+"年"+sample.getBirthMonth()+"月"+sample.getBirthDay()
-							+"日出生（經××× 戶政事務所核准逕為出生登記）。");
 	}
 	
 	private void showErrorMessage(String errorStr)
