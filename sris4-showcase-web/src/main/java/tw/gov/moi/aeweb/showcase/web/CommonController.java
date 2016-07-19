@@ -288,6 +288,8 @@ public class CommonController extends BaseRisController {
 		
 		newIDMark = "";
 		
+		changeCause = "empty";
+		
 		rl0171cVO = new Rl0171cVO();
 		
 		return "";
@@ -322,8 +324,6 @@ public class CommonController extends BaseRisController {
  		else
  		{
  			rl0171cVO.setOrderNumber("A160XXXXXXXX");
-//			String oldnote = sample.getNotebook();
-//			sample.setNotebook(oldnote + "變更統一編號測試組合記事資料");
 			
 			hide002 = false;
 			hide003 = true;
@@ -348,6 +348,7 @@ public class CommonController extends BaseRisController {
 		// 原登記國民身分證統一編號為××××××××××係錯誤（誤錄、誤報、不符配賦邏輯、性別變更、性別錯誤、出生別錯誤）民國×××年××月××日更正（經×××戶政事務所逕為更正登記）。
 		
 		//sample.setNotebook(oldnote);
+		changeCause = "empty";
 		
 		hide002 = true;
 		hide003 = false;

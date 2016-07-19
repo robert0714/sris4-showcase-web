@@ -178,4 +178,12 @@ public class Rl0171cVO implements Serializable
 	public void setOrder(boolean isOrder) {
 		this.isOrder = isOrder;
 	}
+
+	public String getMixNotebook() {
+		return mixNotebook;
+	}
+
+	public void setMixNotebook(String mixNotebook) {
+		this.mixNotebook = mixNotebook;
+	}
 }
