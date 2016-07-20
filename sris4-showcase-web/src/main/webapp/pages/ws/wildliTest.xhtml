@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/commons/layout/baseLayout.xhtml">
+
+	<ui:define name="body">
+		<h:form style="display:inline" acceptcharset="utf-8"
+			enctype="application/x-www-form-urlencoded; charset=UTF-8">
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+			<p:fieldset legend="統一編號變更" style="margin-bottom:20px"
+				rendered="#{not commonController.clientHasRender}">
+				<h:panelGrid columns="3" cellpadding="5">
+					<h:outputText>當事人統一編號</h:outputText>
+					<h:inputText value="#{commonController.clientID}"></h:inputText>
+					<h:commandButton action="#{commonController.renderClient()}"
+						value="帶出"></h:commandButton>
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+
+		<h:form style="display:inline" acceptcharset="utf-8"
+			enctype="application/x-www-form-urlencoded; charset=UTF-8">
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+			<p:fieldset legend="變更統一編號" style="margin-bottom:20px"
+				rendered="#{commonController.clientHasRender}"
+				id="changeIDField">
+				<h:panelGrid columns="4" cellpadding="5">
+					<h:outputText>姓名:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientName}"
+						disabled="true" />
+					<h:outputText>出生身份:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientBornIdentity}"
+						disabled="true" />
+					<h:outputText>出生地點:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientBornLoc}"
+						disabled="true" />
+					<h:outputText>出生別:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientBornOrder}"
+						disabled="true" />
+					<h:outputText>地址:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientAddress}"
+						disabled="true" />
+					<h:outputText>配偶:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientMate}"
+						disabled="true" />
+					<h:outputText>父:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientFather}"
+						disabled="true" />
+					<h:outputText>母:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientMother}"
+						disabled="true" />
+					<h:outputText>出生日期:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientBornDate}"
+						disabled="true" />
+
+
+				</h:panelGrid>
+				<h:panelGrid columns="3" cellpadding="2">
+					<h:outputText>新變更統一編號:</h:outputText>
+					<h:inputText
+						value="#{commonController.renderedClientVO.clientNewId}" />
+					<h:commandButton value="產生ID"
+						actionListener="#{commonController.makeNewID}">
+					</h:commandButton>
+					<h:outputText>變更原因:</h:outputText>
+					<h:selectOneMenu value="#{commonController.changeCause}"
+						style="width:150px">
+						<p:ajax listener="#{commonController.causeOnChange}"
+							update="changeIDField" />
+						<f:selectItems value="#{commonController.changeCauses}" />
+					</h:selectOneMenu>
+				</h:panelGrid>
+				<p:fieldset id="mixText" legend="組合計事" style="margin-bottom:20px">
+					<h:outputText>#{commonController.mixText}</h:outputText>
+				</p:fieldset>
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:commandButton value="製單" action="#{commonController.makeForm}"
+						rendered="#{commonController.hasControlBtn}" />
+				</h:panelGrid>
+			</p:fieldset>
+			<p:fieldset legend="統一編號變更單" style="margin-bottom:20px"
+				rendered="#{commonController.hasMakeForm}">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputText>單號:</h:outputText>
+					<h:outputText>form1</h:outputText>
+					<h:outputText>姓名:</h:outputText>
+					<h:outputText>#{commonController.renderedClientVO.clientName}</h:outputText>
+				</h:panelGrid>
+				<p:fieldset legend="組合計事" style="margin-bottom:20px">
+					<h:outputText>#{commonController.mixText}</h:outputText>
+				</p:fieldset>
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:commandButton value="送出申請"
+						actionListener="#{commonController.doApply}" />
+					<h:commandButton value="取消"
+						action="#{commonController.doCancel}" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
