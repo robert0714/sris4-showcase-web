@@ -79,7 +79,7 @@
 					<h:outputText>變更原因:</h:outputText>
 					<h:selectOneMenu value="#{commonController.changeCause}"
 						style="width:150px">
-						<p:ajax listener="#{commonController.causeOnChange}"
+						<p:ajax listener="#{commonController.causeOnChange2}"
 							update="changeIDField" />
 						<f:selectItems value="#{commonController.changeCauses}" />
 					</h:selectOneMenu>
@@ -107,7 +107,7 @@
 					<h:commandButton value="送出申請"
 						actionListener="#{commonController.doApply}" />
 					<h:commandButton value="取消"
-						action="#{commonController.doCancel}" />
+						action="#{commonController.doCancel2}" />
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
