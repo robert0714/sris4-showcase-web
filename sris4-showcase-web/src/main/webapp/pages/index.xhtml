@@ -41,7 +41,7 @@
 						</p:column>
 						
 						<p:row>
-							<p:commandButton value="查詢" action="#{rc.loadPage}" />
+							<p:commandButton value="查詢" action="#{rc.loadPage}" update="value"/>
 						</p:row>	
 						
 						</p:panelGrid>
@@ -103,7 +103,7 @@
 						<br/>
 						
 						<div style="text-align:center">
-							<p:commandButton value="資料驗證" action="#{rc.verifyAppData}" />&#160;&#160;
+							<p:commandButton value="資料驗證" action="#{rc.verifyAppData}" update="memo"/>&#160;&#160;
 							<p:commandButton value="取消" action="#{rc.doCancel}" update="newId memo reason"><p:ajax resetValues="true" /></p:commandButton>&#160;&#160;
 							<p:commandButton value="製單" />
 						</div>

@@ -155,10 +155,10 @@ public class Rl0171cController {
 	
 	public void verifyAppData(){
 		
-		System.out.println("verifyAppData()~~~~~~~~");
-		dataOK = true;
+		System.out.println("verifyAppData()~~~~~~~~"+reason+"!");
 		
-		if( dataOK ){
+		
+		if( !reason.isEmpty() ){
 			isDisplayMemo = true;
 		}else{
 			isDisplayMemo = false;
