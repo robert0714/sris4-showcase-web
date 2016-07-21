@@ -28,8 +28,36 @@ public class demoView {
 	private boolean showStep1 = true;
 	private boolean showStep2 = false;
 	private boolean showStep3 = false;
+	private String firstname;
+	private String lastname;
 
-	public void handleStep2Event() {
+	public String getLastname() {
+		return this.lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public void handleStepEvent1() {
+		showStep1 = true;
+		showStep2 = true;
+		showStep3 = false;
+	}
+
+	public void handleStepEvent2() {
+		showStep1 = true;
+		showStep2 = false;
+		showStep3 = false;
+	}
+
+	public void handleStepEvent3() {
+		showStep1 = true;
+		showStep2 = true;
+		showStep3 = true;
+	}
+
+	public void handleStepEvent4() {
 		showStep1 = true;
 		showStep2 = true;
 		showStep3 = false;
@@ -167,5 +195,17 @@ public class demoView {
 
 	public void setShowStep3(boolean showStep3) {
 		this.showStep3 = showStep3;
+	}
+
+	public void save() {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Welcome " + firstname + " " + lastname));
+	}
+
+	public String getFirstname() {
+		return this.firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 }

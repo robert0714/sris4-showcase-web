@@ -7,16 +7,6 @@
 
 
 	<ui:define name="body">
-		<script type="text/javascript">
-			$(document).ready(function() {  
-				$('#div2').hide();
-				$('#div3').hide();
-			});
-			function hideDiv3() {  
-				$('#div2').show();
-				$('#div3').hide();
-			};	
-		</script>	
 		<h:form id="form" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
 		    <p:growl id="msgs" showDetail="true" />
@@ -30,63 +20,65 @@
   				<br/>	
 				<h:outputText value="你選擇的日期：" />
             	<h:outputText id="date1" value="#{demoView.date1}">
-                	<f:convertDateTime pattern="yyyy/MM/dd hh:mm:ss" />
+                	<f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
             	</h:outputText>
 		        </p:panel>
 		    </p:fieldset>
 		    
 		    <p:fieldset legend="流程控制" style="margin-bottom:20px">
 		    <h:outputText value="Step 1- Step 2- Step 3 ：" />
-		    <p:accordionPanel>
-		        <p:ajax event="tabChange" listener="#{demoView.onTabChange}" update=":form:msgs" />
-		        <p:ajax event="tabClose" listener="#{demoView.onTabClose}" update=":form:msgs" />
+		        <p:fieldset id="step1" rendered="#{demoView.showStep1}">
+		            <h:panelGrid columns="2" cellpadding="10">
+		                <h:outputText value="第一步" /><br/>
+		                <p:commandButton value="下一步" icon="ui-icon-check" action="#{demoView.handleStepEvent1()}" update="@form"/>  
+		            </h:panelGrid>
+		        </p:fieldset>
+		        <p:fieldset id="step2" rendered="#{demoView.showStep2}">
+		            <h:panelGrid columns="2" cellpadding="10">
+		                <h:outputText value="第二步" /><br/>
+		                <p:commandButton value="上一步" icon="ui-icon-check" action="#{demoView.handleStepEvent2()}" update="@form"/>  
+		                <p:commandButton value="下一步" icon="ui-icon-check" action="#{demoView.handleStepEvent3()}" update="@form"/>  
+		            </h:panelGrid>
+		        </p:fieldset>
+		        <p:fieldset id="step3" rendered="#{demoView.showStep3}">
+		            <h:panelGrid columns="2" cellpadding="10">
+		                <h:outputText value="第三步" /><br/>
+		                <p:commandButton value="上一步" icon="ui-icon-check" action="#{demoView.handleStepEvent4()}" update="@form"/>  
+		            </h:panelGrid>
+		        </p:fieldset>	    
+
+		    </p:fieldset>
+		    
+		    </h:form>
+		    		<h:form id="form2" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
+		    <p:growl id="msgs" showDetail="true" />
+		    
+		    
+		    <p:fieldset legend="驗證" style="margin-bottom:20px">
+			    <p:panel id="panel2" columns="3" cellpadding="10" header="請輸入姓名">
+
+		        <h:panelGrid columns="3" cellpadding="5">
+		            <p:outputLabel for="firstname" value="姓:" />
+		            <p:inputText id="firstname" value="#{demoView.firstname}" required="true" label="Firstname">
+		                <f:validateLength minimum="2" />
+		            </p:inputText>
+		            <p:message for="firstname" display="icon" />
 		 
-		        <p:tab id="step1" title="Step 1">
-		            <h:panelGrid columns="2" cellpadding="10">
-		                <h:outputText
-		                    value="The story begins as Don Vito Corleone..." />
-		                <p:commandButton value="下一步" icon="ui-icon-check" >
-		                	<p:ajax event="click" update="step2" listener="#{demoView.handleStep2Event}"/>
-		                </p:commandButton>    
-		            </h:panelGrid>
-		        </p:tab>
-		        <p:tab id="step2" widgetVar="step2" title="Step 2" rendered="#{demoView.showStep2}">
-		            <h:panelGrid columns="2" cellpadding="10">
-		                <h:outputText value="Francis Ford Coppola's legendary..." />
-		            </h:panelGrid>
-		        </p:tab>
-		        <p:tab id="step3" title="Step 3" rendered="false">
-		            <h:panelGrid columns="2" cellpadding="10">
-		                <h:outputText value="After a break of more than 15 years..." />
-		            </h:panelGrid>
-		        </p:tab>
-		    </p:accordionPanel>		    
-
-		    </p:fieldset>
-		    
-		    <p:fieldset legend="流程控制" style="margin-bottom:20px">
-			    <p:panel id="panel2" columns="3" cellpadding="10">
+		            <p:outputLabel for="lastname" value="名:" />
+		            <p:inputText id="lastname" value="#{demoView.lastname}" label="Lastname" required="true">
+		                <f:validateLength minimum="2" />
+		                <p:ajax update="msgLastname" event="keyup" />
+		            </p:inputText>
+		            <p:message for="lastname" id="msgLastname" display="icon" />
+		 
+		        </h:panelGrid>
+		 
+		        <p:commandButton value="存檔" update="panel2" actionListener="#{demoView.save}" icon="ui-icon-check" />
 			    
 			    </p:panel>
 		    </p:fieldset>
-
-		    <p:fieldset legend="流程控制" style="margin-bottom:20px">
-			    <p:panel id="panel2" columns="3" cellpadding="10">
-			    
-			    </p:panel>
-		    </p:fieldset>
-
-		    <p:fieldset legend="流程控制" style="margin-bottom:20px">
-			    <p:panel id="panel2" columns="3" cellpadding="10">
-			    
-			    </p:panel>
-		    </p:fieldset>
-		    
-		    <p:fieldset legend="流程控制" style="margin-bottom:20px">
-			    <p:panel id="panel2" columns="3" cellpadding="10">
-			    
-			    </p:panel>
-		    </p:fieldset>		    		    		    		    
+		    		    		    		    
 		</h:form>
 	</ui:define>
 
