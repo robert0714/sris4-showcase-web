@@ -37,20 +37,22 @@
 		            <h:panelGrid columns="2" cellpadding="10">
 		                <h:outputText value="第二步" /><br/>
 		                <p:commandButton value="上一步" icon="ui-icon-check" action="#{demoView.handleStepEvent2()}" update="@form"/>  
-		                <p:commandButton value="下一步" icon="ui-icon-check" action="#{demoView.handleStepEvent3()}" update="@form"/>  
+		               <!--  <p:commandButton value="下一步" icon="ui-icon-check" action="#{demoView.handleStepEvent3()}" update="@form"/> 
+		               -->  
 		            </h:panelGrid>
 		        </p:fieldset>
+		        <!-- 
 		        <p:fieldset id="step3" rendered="#{demoView.showStep3}">
 		            <h:panelGrid columns="2" cellpadding="10">
 		                <h:outputText value="第三步" /><br/>
 		                <p:commandButton value="上一步" icon="ui-icon-check" action="#{demoView.handleStepEvent4()}" update="@form"/>  
 		            </h:panelGrid>
 		        </p:fieldset>	    
-
+ 				-->
 		    </p:fieldset>
 		    
 		    </h:form>
-		    		<h:form id="form2" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
+		    <h:form id="form2" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
 		    <p:growl id="msgs" showDetail="true" />
 		    
@@ -80,6 +82,42 @@
 		    </p:fieldset>
 		    		    		    		    
 		</h:form>
+
+		    <h:form id="form3" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
+		    <p:growl id="msgs" showDetail="true" />
+		    
+		    
+		    <p:fieldset legend="表格" style="margin-bottom:20px">
+			    <p:panel id="panel3" columns="3" cellpadding="10">
+
+					<p:dataTable var="nationalitys" value="#{demoView.nationalitys}">
+					    <f:facet name="header">
+        				國籍表
+   						</f:facet>
+					
+					    <p:column headerText="中文名稱" sortBy="#{nationalitys.chineseName}">
+					        <p:inputText value="#{nationalitys.chineseName}" />
+					    </p:column>
+					 
+					    <p:column headerText="英文名稱">
+					        <h:outputText value="#{nationalitys.englishName}" />
+					    </p:column>
+					    
+					    <f:facet name="footer">
+        					總共#{fn:length(demoView.nationalitys)} 筆資料.
+    					</f:facet>
+					</p:dataTable>
+			    </p:panel>
+		    </p:fieldset>
+		    
+		    <p:fieldset legend="線圖" style="margin-bottom:20px">
+			<p:panel id="panel4" columns="3" cellpadding="10">
+				<p:chart type="line" model="#{demoView.lineModel1}" style="height:300px;"/>
+    		</p:panel>
+		    </p:fieldset>		    		    		    		    
+		</h:form>
+				
 	</ui:define>
 
 </ui:composition>

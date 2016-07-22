@@ -1,12 +1,19 @@
 package tw.gov.moi.aeweb.showcase.web;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 @ManagedBean
 public class demoView {
@@ -31,12 +38,58 @@ public class demoView {
 	private String firstname;
 	private String lastname;
 
+	private List<Nationality> nationalitys;
+	private LineChartModel lineModel1;
+
 	public String getLastname() {
 		return this.lastname;
 	}
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+
+	@PostConstruct
+	public void init() {
+		createLineModels();
+		nationalitys = new ArrayList<Nationality>();
+		nationalitys.add(new Nationality("台灣", "Taiwan", 23000000));
+		nationalitys.add(new Nationality("中國", "China", 1100000000));
+		nationalitys.add(new Nationality("日本", "Japan", 200000000));
+		nationalitys.add(new Nationality("美國", "US", 700000000));
+		nationalitys.add(new Nationality("法國", "France", 300000000));
+	}
+
+	private void createLineModels() {
+		final LineChartModel model = new LineChartModel();
+		final LineChartSeries series1 = new LineChartSeries();
+		series1.setLabel("Series 1");
+
+		series1.set(1, 2);
+		series1.set(2, 1);
+		series1.set(3, 3);
+		series1.set(4, 6);
+		series1.set(5, 8);
+
+		final LineChartSeries series2 = new LineChartSeries();
+		series2.setLabel("Series 2");
+
+		series2.set(1, 6);
+		series2.set(2, 3);
+		series2.set(3, 2);
+		series2.set(4, 7);
+		series2.set(5, 9);
+
+		model.addSeries(series1);
+		model.addSeries(series2);
+
+		lineModel1 = model;
+
+		lineModel1.setTitle("Linear Chart");
+		lineModel1.setLegendPosition("e");
+		final Axis yAxis = lineModel1.getAxis(AxisType.Y);
+		yAxis.setMin(0);
+		yAxis.setMax(10);
 	}
 
 	public void handleStepEvent1() {
@@ -207,5 +260,21 @@ public class demoView {
 
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
+	}
+
+	public List<Nationality> getNationalitys() {
+		return this.nationalitys;
+	}
+
+	public void setNationalitys(List<Nationality> nationalitys) {
+		this.nationalitys = nationalitys;
+	}
+
+	public LineChartModel getLineModel1() {
+		return this.lineModel1;
+	}
+
+	public void setLineModel1(LineChartModel lineModel1) {
+		this.lineModel1 = lineModel1;
 	}
 }
