@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:ris="http://java.sun.com/jsf/composite/ris"
+    xmlns:p="http://primefaces.org/ui" template="/WEB-INF/commons/layout/baseLayout.xhtml">
+<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+
+    <ui:define name="body">
+
+		<h:form acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
+		    <p:growl id="msgs" showDetail="true" />
+            <p:growl id="msg" />
+
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+            	<h:outputText value="編輯器: " />
+            	<p:editor id="editor" widgetVar="editorWidget" value="#{testView.text}" width="600" />
+            	
+            	<h:outputText value="塗鴉板: " />
+            	<p:signature style="width:400px;height:200px" widgetVar="sig" value="#{testView.draw}" required="true" label="Signature" guideline="true"/>
+            	
+            	<h:outputText value="日曆: " />
+            	<p:calendar id="inline" value="#{testView.date1}" mode="popup" pages="3" effect="fold" pattern="yyyy/MM/dd HH:mm:ss" mask="true" timeOnly="false">
+            		<p:ajax event="dateSelect" update="date1" />
+            	</p:calendar>
+            	
+            	<h:outputText value="日曆結果: " />
+            	<h:outputText id="date1" value="#{testView.date1}">
+                	<f:convertDateTime pattern="yyyy/MM/dd hh:mm:ss" />
+            	</h:outputText>
+            
+            
+                <h:outputText value="Basic: " />
+                <p:selectBooleanCheckbox value="#{testView.value1}" />
+
+                <h:outputText value="Ajax: " />
+                <p:selectBooleanCheckbox value="#{testView.value2}">
+                    <p:ajax update="msg" listener="#{testView.addMessage}" />
+                </p:selectBooleanCheckbox>
+            </h:panelGrid>
+
+            <p:commandButton value="Submit" icon="ui-icon-check" update="display" oncomplete="PF('dlg').show()" />
+
+            <p:dialog header="Values" modal="true" resizable="false" showEffect="fade" widgetVar="dlg">
+                <h:panelGrid columns="1" id="display">
+                    <h:outputText value="Value 1: #{testView.value1}" />
+                    <h:outputText value="Value 2: #{testView.value2}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+         <f:view locale="zh">
+  <h:form>
+  <h:outputText value="申請表格" />
+  <br />
+  <p:separator />
+  <h:outputLabel value="使用者帳號:" />
+  <h:inputText value="#{appForm.userId}" />
+  <br />
+  <h:outputLabel value="姓名:" />
+  <h:inputText value="#{appForm.userName}" />
+  <br />
+  <h:outputLabel value="密碼:" />
+  <h:inputText value="#{appForm.password}" />
+  <h:commandButton value="確認" action="/xhtml/resultPage" />
+  </h:form>
+ </f:view>
+        
+    </ui:define>
+</ui:composition>

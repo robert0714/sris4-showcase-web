@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:ris="http://java.sun.com/jsf/composite/ris"
+    xmlns:p="http://primefaces.org/ui" template="/WEB-INF/commons/layout/baseLayout.xhtml">
+<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+
+
+	<ui:define name="body">
+		<h:form id="form" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
+		    <p:growl id="msgs" showDetail="true" />
+
+			<p:fieldset legend="日期選擇器" style="margin-bottom:20px">
+		        <p:panel id="panel1" columns="3" cellpadding="10">
+		            <p:outputLabel for="data1" value="日期:" style="font-weight:bold" />
+        			<p:calendar id="data1" value="#{demoView.date1}" mode="popup" pattern="yyyy/MM/dd HH:mm:ss" mask="true" timeOnly="false" >
+        				<p:ajax event="dateSelect" update="date1" />
+        			</p:calendar>
+  				<br/>	
+				<h:outputText value="你選擇的日期：" />
+            	<h:outputText id="date1" value="#{demoView.date1}">
+                	<f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
+            	</h:outputText>
+		        </p:panel>
+		    </p:fieldset>
+		    
+		    <p:fieldset legend="流程控制" style="margin-bottom:20px">
+		    <h:outputText value="Step 1- Step 2- Step 3 ：" />
+		        <p:fieldset id="step1" rendered="#{demoView.showStep1}">
+		            <h:panelGrid columns="2" cellpadding="10">
+		                <h:outputText value="第一步" /><br/>
+		                <p:commandButton value="下一步" icon="ui-icon-check" action="#{demoView.handleStepEvent1()}" update="@form"/>  
+		            </h:panelGrid>
+		        </p:fieldset>
+		        <p:fieldset id="step2" rendered="#{demoView.showStep2}">
+		            <h:panelGrid columns="2" cellpadding="10">
+		                <h:outputText value="第二步" /><br/>
+		                <p:commandButton value="上一步" icon="ui-icon-check" action="#{demoView.handleStepEvent2()}" update="@form"/>  
+		               <!--  <p:commandButton value="下一步" icon="ui-icon-check" action="#{demoView.handleStepEvent3()}" update="@form"/> 
+		               -->  
+		            </h:panelGrid>
+		        </p:fieldset>
+		        <!-- 
+		        <p:fieldset id="step3" rendered="#{demoView.showStep3}">
+		            <h:panelGrid columns="2" cellpadding="10">
+		                <h:outputText value="第三步" /><br/>
+		                <p:commandButton value="上一步" icon="ui-icon-check" action="#{demoView.handleStepEvent4()}" update="@form"/>  
+		            </h:panelGrid>
+		        </p:fieldset>	    
+ 				-->
+		    </p:fieldset>
+		    
+		    </h:form>
+		    <h:form id="form2" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
+		    <p:growl id="msgs" showDetail="true" />
+		    
+		    
+		    <p:fieldset legend="驗證" style="margin-bottom:20px">
+			    <p:panel id="panel2" columns="3" cellpadding="10" header="請輸入姓名">
+
+		        <h:panelGrid columns="3" cellpadding="5">
+		            <p:outputLabel for="firstname" value="姓:" />
+		            <p:inputText id="firstname" value="#{demoView.firstname}" required="true" label="Firstname">
+		                <f:validateLength minimum="2" />
+		            </p:inputText>
+		            <p:message for="firstname" display="icon" />
+		 
+		            <p:outputLabel for="lastname" value="名:" />
+		            <p:inputText id="lastname" value="#{demoView.lastname}" label="Lastname" required="true">
+		                <f:validateLength minimum="2" />
+		                <p:ajax update="msgLastname" event="keyup" />
+		            </p:inputText>
+		            <p:message for="lastname" id="msgLastname" display="icon" />
+		 
+		        </h:panelGrid>
+		 
+		        <p:commandButton value="存檔" update="panel2" actionListener="#{demoView.save}" icon="ui-icon-check" />
+			    
+			    </p:panel>
+		    </p:fieldset>
+		    		    		    		    
+		</h:form>
+
+		    <h:form id="form3" acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
+		    <p:growl id="msgs" showDetail="true" />
+		    
+		    
+		    <p:fieldset legend="表格" style="margin-bottom:20px">
+			    <p:panel id="panel3" columns="3" cellpadding="10">
+
+					<p:dataTable var="nationalitys" value="#{demoView.nationalitys}">
+					    <f:facet name="header">
+        				國籍表
+   						</f:facet>
+					
+					    <p:column headerText="中文名稱" sortBy="#{nationalitys.chineseName}">
+					        <p:inputText value="#{nationalitys.chineseName}" />
+					    </p:column>
+					 
+					    <p:column headerText="英文名稱">
+					        <h:outputText value="#{nationalitys.englishName}" />
+					    </p:column>
+					    
+					    <f:facet name="footer">
+        					總共#{fn:length(demoView.nationalitys)} 筆資料.
+    					</f:facet>
+					</p:dataTable>
+			    </p:panel>
+		    </p:fieldset>
+		    
+		    <p:fieldset legend="線圖" style="margin-bottom:20px">
+			<p:panel id="panel4" columns="3" cellpadding="10">
+				<p:chart type="line" model="#{demoView.lineModel1}" style="height:300px;"/>
+    		</p:panel>
+		    </p:fieldset>		    		    		    		    
+		</h:form>
+				
+	</ui:define>
+
+</ui:composition>
+
