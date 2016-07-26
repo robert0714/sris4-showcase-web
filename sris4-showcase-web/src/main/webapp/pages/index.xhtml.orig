@@ -1,0 +1,109 @@
+<<<<<<< HEAD
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/commons/layout/baseLayout.xhtml">
+
+	<ui:define name="body">
+    
+	</ui:define>
+
+</ui:composition>
+
+=======
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:ris="http://java.sun.com/jsf/composite/ris"
+    xmlns:p="http://primefaces.org/ui" template="/WEB-INF/commons/layout/baseLayout.xhtml">
+<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+
+
+	<ui:define name="body">
+		<script type="text/javascript">
+			$(document).ready(function() {  
+				$('#div2').hide();
+				$('#div3').hide();
+			});
+			function hideDiv3() {  
+				$('#div2').show();
+				$('#div3').hide();
+			};	
+		</script>	
+		<h:form acceptcharset="utf-8" enctype="application/x-www-form-urlencoded; charset=UTF-8">         
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />      
+		    <p:growl id="msgs" showDetail="true" />
+
+			<p:fieldset legend="統一編號變更" style="margin-bottom:20px">
+		        <p:panel id="panel1" columns="3" cellpadding="10">
+		            <p:outputLabel for="oldId" value="當事人統一編號:" style="font-weight:bold" />
+        			<p:inputText id="oldId" value="#{indexView.oldId}" required="true"/>
+        			<p:message for="oldId"/>
+         			<p:commandButton process="@parent:@parent" value="查詢" update="@form" icon="ui-icon-check" actionListener="#{indexView.queryData}" onfail="hideDiv3();"/>     			
+		        </p:panel>
+		    </p:fieldset>
+			
+			<div id="div2">
+		    <p:fieldset legend="變更統一編號" style="margin-bottom:20px">
+		        <p:panelGrid id="panel2" widgetVar="panel2" columns="2" cellpadding="5">
+		            <p:outputLabel for="display" value="當事人統一編號:" style="font-weight:bold" />
+		            <h:outputText id="display" value="#{indexView.oldId}" />  
+		            <h:outputLabel for="name" value="姓名:" style="font-weight:bold" />
+        			<p:inputText id="name" value="#{indexView.name}" />
+        			<h:outputLabel for="birthday" value="出生日期:" style="font-weight:bold" />
+        			<p:calendar id="birthday" value="#{indexView.birthday}" />
+        			<h:outputLabel for="bornway" value="出生身份:" style="font-weight:bold" />
+        			<p:inputText id="bornway" value="#{indexView.bornway}" />
+        			<h:outputLabel for="city" value="出生地點:" style="font-weight:bold" />
+        			<p:inputText id="city" value="#{indexView.city}" />
+        			<h:outputLabel for="type" value="出生別:" style="font-weight:bold" />
+        			<p:inputText id="type" value="#{indexView.type}" />
+        			<h:outputLabel for="addr" value="地址:" style="font-weight:bold" />
+        			<p:inputText id="addr" value="#{indexView.addr}" />
+        			<h:outputLabel for="spouse" value="配偶:" style="font-weight:bold" />
+        			<p:inputText id="spouse" value="#{indexView.spouse}" />
+        			<h:outputLabel for="father" value="父親:" style="font-weight:bold" />
+        			<p:inputText id="father" value="#{indexView.father}" />
+        			<h:outputLabel for="mather" value="母親:" style="font-weight:bold" />
+        			<p:inputText id="mather" value="#{indexView.mather}" />
+        			
+         			<h:outputLabel for="newId" value="新變更統一編號:" style="font-weight:bold" />
+        			<p:inputText id="newId" value="#{indexView.newId}" />
+        			<h:outputLabel />
+        			<p:commandButton value="產號" update="display" icon="ui-icon-check" />
+        			<h:outputLabel for="memo" value="組合記事:" style="font-weight:bold" />    	
+        			<p:selectOneMenu id="memo" style="width:125px">
+			            <f:selectItem itemLabel="原登記統一編號為××××××××××係誤錄（錯誤、誤報、不符配賦邏輯、性別變更、性別錯誤、出生別錯誤）民國×××年××月××日（經×××戶政事務所核准逕為）更正。" itemValue="1" />
+			            <f:selectItem itemLabel="因誤錄（錯誤、誤報、不符配賦邏輯、性別變更、性別錯誤、出生別錯誤）原配賦統一編號××××××××××（經×××戶政事務所核准逕為）更正為××××××××××民國×××年××月××日申登。" itemValue="2" />
+        			</p:selectOneMenu>		
+        			
+        			<p:commandButton value="送出申請" update="display" icon="ui-icon-check" />
+        			<p:commandButton value="清空" immediate="true" update="panel2" process="@this" style="margin-right:20px;">
+                		<p:resetInput target="panel2" />
+            		</p:commandButton>
+        			    			
+		        </p:panelGrid>
+		    </p:fieldset>
+		    </div>
+		    <div id="div3">
+ 			<p:fieldset legend="申請結果" style="margin-bottom:20px">
+		     <h:panelGrid columns="2" cellpadding="5">
+		            <p:outputLabel for="oldId2" value="原統一編號:" style="font-weight:bold" />
+        			<h:outputText id="oldId2" value="#{indexView.oldId}" />	     
+		            <h:outputLabel for="newId2" value="新變更統一編號:" style="font-weight:bold" />
+        			<h:outputText id="newId2" value="#{indexView.newId}" />
+		            <p:outputLabel for="memo2" value="組合記事:" style="font-weight:bold" />
+        			<h:outputText id="memo2" value="#{indexView.memo}" />	        			
+		            <p:commandButton value="刪除" update="display" icon="ui-icon-check" />
+		     </h:panelGrid>
+		    </p:fieldset>
+		    </div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+
+>>>>>>> trevorWang

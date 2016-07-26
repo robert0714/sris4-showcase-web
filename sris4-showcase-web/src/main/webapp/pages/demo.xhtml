@@ -37,18 +37,18 @@
 		            <h:panelGrid columns="2" cellpadding="10">
 		                <h:outputText value="第二步" /><br/>
 		                <p:commandButton value="上一步" icon="ui-icon-check" action="#{demoView.handleStepEvent2()}" update="@form"/>  
-		               <!--  <p:commandButton value="下一步" icon="ui-icon-check" action="#{demoView.handleStepEvent3()}" update="@form"/> 
-		               -->  
+		                <p:commandButton value="下一步" icon="ui-icon-check" action="#{demoView.handleStepEvent3()}" update="@form"/> 
+		                
 		            </h:panelGrid>
 		        </p:fieldset>
-		        <!-- 
+		        
 		        <p:fieldset id="step3" rendered="#{demoView.showStep3}">
 		            <h:panelGrid columns="2" cellpadding="10">
 		                <h:outputText value="第三步" /><br/>
 		                <p:commandButton value="上一步" icon="ui-icon-check" action="#{demoView.handleStepEvent4()}" update="@form"/>  
 		            </h:panelGrid>
 		        </p:fieldset>	    
- 				-->
+ 				
 		    </p:fieldset>
 		    
 		    </h:form>
@@ -115,7 +115,27 @@
 			<p:panel id="panel4" columns="3" cellpadding="10">
 				<p:chart type="line" model="#{demoView.lineModel1}" style="height:300px;"/>
     		</p:panel>
-		    </p:fieldset>		    		    		    		    
+		    </p:fieldset>		    
+		    
+		    <p:fieldset legend="對話框" style="margin-bottom:20px">
+		    	<p:dialog id="dlg" header="對話框" modal="true" widgetVar="dlg"> 
+				    <h:outputText value="Resistance to PrimeFaces is futile!" />
+					<h:outputText value="Resistance to PrimeFaces is futile!" />
+					<h:outputText value="Resistance to PrimeFaces is futile!" />
+					<h:outputText value="Resistance to PrimeFaces is futile!" />
+					<h:outputText value="Resistance to PrimeFaces is futile!" />
+					<h:outputText value="Resistance to PrimeFaces is futile!" />
+				</p:dialog>	
+		    
+				<h:panelGrid id="panel5" columns="3" cellpadding="10">
+					<p:commandButton value="存檔" onclick="PF('dlg').show();"/>
+	    		</h:panelGrid>
+
+
+
+		    </p:fieldset>	
+		    
+	    		    		    		    
 		</h:form>
 				
 	</ui:define>
