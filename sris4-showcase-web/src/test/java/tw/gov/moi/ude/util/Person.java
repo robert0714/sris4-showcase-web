@@ -1,0 +1,91 @@
+package tw.gov.moi.ude.util;
+
+/*
+ * Copyright (c) 2010-2020 IISI.
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of IISI.
+ */
+
+/**
+ *
+ */
+public class Person {
+	// ================================================
+	// == [Enumeration types] Block Start
+	// == [Enumeration types] Block End
+	// ================================================
+	// == [static variables] Block Start
+	// == [static variables] Block Stop
+	// ================================================
+	// == [instance variables] Block Start
+	// == [instance variables] Block Stop
+	// ================================================
+	// == [static Constructor] Block Start
+	// == [static Constructor] Block Stop
+	// ================================================
+	// == [Constructors] Block Start (含init method)
+	// == [Constructors] Block Stop
+	// ================================================
+	// == [Static Method] Block Start
+	// == [Static Method] Block Stop
+	// ================================================
+	// == [Accessor] Block Start
+	// == [Accessor] Block Stop
+	// ================================================
+	// == [Overrided Method] Block Start (Ex. toString/equals+hashCode)
+	// == [Overrided Method] Block Stop
+	// ================================================
+	// == [Method] Block Start
+	// ####################################################################
+	// ## [Method] sub-block :
+	// ####################################################################
+	// == [Method] Block Stop
+	// ================================================
+	// == [Inner Class] Block Start
+	// == [Inner Class] Block Stop
+	// ================================================
+
+	private String firstname;
+	private String lastname;
+
+	public Person() {
+	}
+
+	// ... constructors and methods
+	public Person(String string, String string2) {
+		firstname = string;
+		lastname = string2;
+	}
+
+	/**
+	 * @return the firstname
+	 */
+	public String getFirstname() {
+		return this.firstname;
+	}
+
+	/**
+	 * @return the lastname
+	 */
+	public String getLastname() {
+		return this.lastname;
+	}
+
+	/**
+	 * @param firstname
+	 *            the firstname to set
+	 */
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	/**
+	 * @param lastname
+	 *            the lastname to set
+	 */
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+}
