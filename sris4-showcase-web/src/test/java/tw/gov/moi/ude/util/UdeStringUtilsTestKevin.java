@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class UdeStringUtilsTestKevin {
 
-	final String testStr = "ABCDEFGH國字";
+	final String testStr = "ABCDEFHH國字";
 
 	final String testStrError = "ABCDEFGX國字";
 
@@ -67,8 +67,7 @@ public class UdeStringUtilsTestKevin {
 	@Test
 	public void testToCodePointArray() throws Exception {
 
-		Assert.assertEquals(true, Arrays.equals(getTestIntArrays(testStr), //
-				UdeStringUtils.toCodePointArray(testStr)));
+		Assert.assertEquals(true, Arrays.equals(getTestIntArrays(testStr), UdeStringUtils.toCodePointArray(testStr)));
 	}
 
 	@Test
@@ -107,18 +106,13 @@ public class UdeStringUtilsTestKevin {
 	@Test
 	public void testToHelfChar() throws Exception {
 
-		// TODO
-		// 未轉型
-		System.err.println("==helf==." + UdeStringUtils.toFullChar("）"));
-
-		Assert.assertEquals(true, ":".equals(UdeStringUtils.toFullChar("）")));
+		Assert.assertEquals(true, ")".equals(UdeStringUtils.toHelfChar("）")));
 	}
 
 	@Test
 	public void testIndexOfStringInt() throws Exception {
 
 		final int find = "B".charAt(0);
-		// System.err.println(UdeStringUtils.indexOf(testStr, find));
 		Assert.assertEquals(true, testStr.indexOf("B") == UdeStringUtils.indexOf(testStr, find));
 	}
 
@@ -164,8 +158,8 @@ public class UdeStringUtilsTestKevin {
 
 	@Test
 	public void testLastIndexOfStringStringInt() throws Exception {
-		Assert.assertEquals(true, testStr.lastIndexOf("B") == UdeStringUtils.lastIndexOf(testStr, "B", 3));
-		System.err.println(UdeStringUtils.lastIndexOf(testStr, "B", 3));
+		Assert.assertEquals(true, testStr.lastIndexOf("H") == UdeStringUtils.lastIndexOf(testStr, "H", 9));
+		System.err.println(UdeStringUtils.lastIndexOf(testStr, "H", 9));
 	}
 
 	@Test

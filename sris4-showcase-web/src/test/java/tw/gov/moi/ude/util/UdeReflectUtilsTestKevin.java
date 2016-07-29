@@ -69,9 +69,17 @@ public class UdeReflectUtilsTestKevin {
 		SpringContextUtils.setApplicationContextStatic(applicationContext);
 
 		final Person per1 = new Person();
-		final Person per2 = new Person();
+
+		per1.setFirstname("1111");
+		per1.setLastname("2222");
+
+		final Person2 per2 = new Person2();
+
+		final Person2 per3 = new Person2();
 
 		Assert.assertSame(SpringContextUtils.getBean("Rl0171cVO").get(), SpringContextUtils.getBean("Rl0171cVO").get());
+
+		System.err.println("Person===" + UdeReflectUtils.diff(per2, per2.getClass().newInstance()));
 		Assert.assertEquals(per1, UdeReflectUtils.diff(per1, per1)); // TODO
 
 	}

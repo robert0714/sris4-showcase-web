@@ -1,5 +1,9 @@
 package tw.gov.moi.ude.util;
 
+import com.iisigroup.ude.exception.EventCode;
+
+import java.util.function.Supplier;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,11 +16,11 @@ public class UdeObjectUtilsTestKevin {
 		per.setFirstname("1111");
 		per.setLastname("2222");
 
-		// TODO
-		// final Person2 per2 = UdeObjectUtils.createFrom(Person2.class, per);
+		final Person per2 = UdeObjectUtils.createFrom(Person.class, per);
 
-		// System.err.println("===" + per2.getFirstname());
+		Assert.assertSame(per.getFirstname(), per2.getFirstname());
 	}
+
 	// ================================================
 	// == [Enumeration types] Block Start
 	// == [Enumeration types] Block End
@@ -54,7 +58,15 @@ public class UdeObjectUtilsTestKevin {
 
 	@Test
 	public void testHandleExceptionRun() throws Exception {
-		throw new RuntimeException("not yet implemented");
+
+		final Supplier<Person> i = Person::new;// () -> "java2s.com";
+
+		System.out.println(i.get());
+
+		final com.iisigroup.ude.util.internal.QuietSupplier<Person> test = Person::new;// ()->"456";
+
+		System.out.println("====" + test.get());
+		System.err.println(UdeObjectUtils.handleExceptionRun(EventCode.UNDEFINED.as("test"), "123", test));
 	}
 
 	enum S1 {
