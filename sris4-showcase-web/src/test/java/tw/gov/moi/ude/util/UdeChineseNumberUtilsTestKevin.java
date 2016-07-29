@@ -12,11 +12,9 @@ public class UdeChineseNumberUtilsTestKevin {
 	@Test
 	public void testFormatChineseNumberTypeLong() throws Exception {
 
-		final long numberlong = 987654;
-
-		Assert.assertEquals("玖拾捌萬柒仟陸佰伍拾肆", UdeChineseNumberUtils.format(ChineseNumberType.Money, numberlong));
-
+		final long numberlong = 9876540;
 		System.err.println("test==11==" + UdeChineseNumberUtils.format(ChineseNumberType.Money, numberlong));
+		Assert.assertEquals("玖拾捌萬柒仟陸佰伍拾肆", UdeChineseNumberUtils.format(ChineseNumberType.Full, numberlong));
 
 		// throw new RuntimeException("not yet implemented");
 	}
