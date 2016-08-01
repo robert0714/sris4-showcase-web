@@ -14,11 +14,11 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/resources/applicationContext2.xml")
-public class SpringContextUtilsTest {
+public class SpringContextUtilsTestWild {
 
 	@Autowired
 	private ApplicationContext context;
@@ -68,9 +68,9 @@ public class SpringContextUtilsTest {
 
 	@Test
 	public void testSetApplicationContextStatic() throws Exception {
-		System.out.println("context = null ? ");
-		System.out.println(context == null);
-		System.out.println(context.getBean("testBean"));
+//		System.out.println("context = null ? ");
+//		System.out.println(context == null);
+//		System.out.println(context.getBean("testBean"));
 		Assert.assertEquals(false, Optional.empty() == SpringContextUtils.getBean("testBean"));
 
 	}
@@ -85,7 +85,7 @@ public class SpringContextUtilsTest {
 
 	@Test
 	public void testGetBeans() throws Exception {
-		Assert.assertTrue(SpringContextUtils.getBeans(SpringContextUtilsTest.class).isPresent());
+		Assert.assertTrue(SpringContextUtils.getBeans(SpringContextUtilsTestWild.class).isPresent());
 	}
 
 	@Test

@@ -24,7 +24,7 @@
 	<!-- 資料庫元件 
     <import resource="classpath:rll-db-connection.xml" />
 	-->
-
+	
 
 	<!-- AE -->
     <import resource="classpath:AE/sris4-ae-basic.xml" />
@@ -34,4 +34,6 @@
 	<!-- 權限管理 -->
     <import resource="classpath:spring-security-free-loginform.xml" />
 
+
+	<bean class="com.iisigroup.ude.util.SpringContextUtilsTestWild" />
 </beans>
